@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-12-26T10:35:06.675Z",
+  "updatedAt": "2025-12-26T10:49:04.807Z",
   "createdAt": "2025-12-26T08:00:57.586Z",
   "name": "To check leaks",
   "isArchived": false,
@@ -19,6 +19,7 @@
       "parameters": {
         "url": "https://www.googleapis.com/youtube/v3/videos",
         "authentication": "__REDACTED__",
+        "nodeCredentialType": "youTubeOAuth2Api",
         "sendQuery": true,
         "queryParameters": {
           "parameters": [
@@ -37,10 +38,6 @@
             {
               "name": "maxResults",
               "value": "5"
-            },
-            {
-              "name": "key",
-              "value": "AIzaSyAwVrQvqgnRcDxnGND51eXBsQkv28T3GTQ"
             }
           ]
         },
@@ -114,7 +111,7 @@
   },
   "staticData": null,
   "pinData": {},
-  "versionCounter": 5,
+  "versionCounter": 6,
   "triggerCount": 0,
   "shared": [
     {
