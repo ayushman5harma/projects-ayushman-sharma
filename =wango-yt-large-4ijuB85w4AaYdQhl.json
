@@ -1,0 +1,3675 @@
+{
+  "updatedAt": "2025-12-22T11:17:00.988Z",
+  "createdAt": "2025-12-19T07:10:36.623Z",
+  "id": "4ijuB85w4AaYdQhl",
+  "name": "wango yt large",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -2256,
+        64
+      ],
+      "id": "e5c226cf-b62b-462f-8a19-a8c2ed543444",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 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"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "latest AI automation trends helping businesses save time and cost"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2048,
+        64
+      ],
+      "id": "f3aa39c8-c863-4c14-a5f0-8c5677d3dbed",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Input is an array of items\nreturn items.map(item => {\n  const results = item.json.results || [];\n\n  return {\n    json: {\n      articles: results.map(r => ({\n        title: r.title,\n        content: r.content\n      }))\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1840,
+        64
+      ],
+      "id": "8a7a2d4d-d6c6-45f6-8ecf-20e7cf6ff351",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -896,
+        752
+      ],
+      "id": "9cc13c9e-c8b7-458c-b9fc-f6357ba26e83",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "frzTbp7KVbj3C3ZE",
+          "name": "Google Gemini(PaLM) Api account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        176,
+        256
+      ],
+      "id": "cbcc7bdb-8952-4089-b2b1-a40fdc333ad4",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "E31OBfVDmptvkvxc",
+          "name": "Ayushman's credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-120b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        496,
+        256
+      ],
+      "id": "d26d2a15-c6c0-4643-bb63-3ed7579745d2",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "elFRmmvAjJm02afJ",
+          "name": "Ayushman's Groq account "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1TQnZHaiPqU4lth7scsfLMqgQqTQhALhQh32ncrNcgVo",
+          "mode": "list",
+          "cachedResultName": "prompts for wango yt",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TQnZHaiPqU4lth7scsfLMqgQqTQhALhQh32ncrNcgVo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1TQnZHaiPqU4lth7scsfLMqgQqTQhALhQh32ncrNcgVo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "prompt 1": "={{ $json.output['\"scene_1\"'] }}",
+            "prompt 2": "={{ $json.output['\"scene_2\"'] }}",
+            "prompt 3": "={{ $json.output['\"scene_3\"'] }}",
+            "prompt 4": "={{ $json.output['\"scene_4\"'] }}",
+            "prompt 5": "={{ $json.output['\"scene_5\"'] }}",
+            "prompt 6": "={{ $json.output['\"scene_6\"'] }}",
+            "prompt 7": "={{ $json.output['\"scene_7\"'] }}",
+            "prompt 8": "={{ $json.output['\"scene_8\"'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "prompt 1",
+              "displayName": "prompt 1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prompt 2",
+              "displayName": "prompt 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prompt 3",
+              "displayName": "prompt 3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prompt 4",
+              "displayName": "prompt 4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prompt 5",
+              "displayName": "prompt 5",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prompt 6",
+              "displayName": "prompt 6",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prompt 7",
+              "displayName": "prompt 7",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prompt 8",
+              "displayName": "prompt 8",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        752,
+        432
+      ],
+      "id": "53b8b491-426d-40a7-9b3c-32154dab6058",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "nZHplNtmclaek6SC",
+          "name": "Ayushman's Credentials"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1856,
+        384
+      ],
+      "id": "469fe1e9-b915-49ca-b410-0f8fd88b549d",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "247d35ad-db0f-4943-94d7-7b98a1d4f41a",
+              "leftValue": "={{ $json.response.status }}",
+              "rightValue": "done",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        6672,
+        48
+      ],
+      "id": "fecd78f8-11fe-4029-97fb-9b7296ed494a",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.response.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        7104,
+        32
+      ],
+      "id": "07244b84-390b-48bc-8775-8072552bbf7f",
+      "name": "HTTP Request35"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        7104,
+        160
+      ],
+      "id": "86b6da2b-098a-40ba-8352-28d4d2652f20",
+      "name": "Wait1",
+      "webhookId": "19fe018f-feeb-4c56-b0af-c98a981b3266"
+    },
+    {
+      "parameters": {
+        "name": "=data",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1QUk90puGBUlj0n56xUYdKKMX5odejCr-",
+          "mode": "list",
+          "cachedResultName": "final vid for review",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1QUk90puGBUlj0n56xUYdKKMX5odejCr-"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        7392,
+        -64
+      ],
+      "id": "87ee20a2-565b-4e72-b978-e7b44cc946ea",
+      "name": "Google Drive2",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "IzjregAsOrXu4yx5",
+          "name": "Ayushman's credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=input :- {{ $json.output }}\n\nthe output is the Idea for the video to be generated \n\noutput : -\n \ntitle \ndescription\nhashtags \n\nyour duty is to use the google sheet tool to update the data respectively below their field names and a new row is created of the output ",
+        "options": {
+          "systemMessage": "=you are an expert YouTube copywriter who write Titles and description for the video s to be posted on the platform \n\ngoal - to write the title and description for the YouTube short by the description provided along with the hashtags related to it \n\ninput -   {{ $json.content.parts[0].text }}\n\noutput -\n{\n\"title\":\"...\",\n\"description\":\"...\",\n\"hashtags\":\"...\"\n}\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -1008,
+        64
+      ],
+      "id": "da308f9d-5188-4df5-837a-5ff971e0350f",
+      "name": "AI Agent3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -832,
+        368
+      ],
+      "id": "a2ab874b-7774-4ae4-9549-8c4e78721c59",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "E31OBfVDmptvkvxc",
+          "name": "Ayushman's credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1wZCaFAE7XflGhB_ajcfAEP2e_tmMVjk26T-SD-dK7Zk",
+          "mode": "list",
+          "cachedResultName": "Title, description & Hashtags",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wZCaFAE7XflGhB_ajcfAEP2e_tmMVjk26T-SD-dK7Zk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wZCaFAE7XflGhB_ajcfAEP2e_tmMVjk26T-SD-dK7Zk/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Title ": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title_', ``, 'string') }}",
+            "Hashtags": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Hashtags', ``, 'string') }}",
+            "Description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Title ",
+              "displayName": "Title ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hashtags",
+              "displayName": "Hashtags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -928,
+        368
+      ],
+      "id": "cb2d9ad9-db44-4e1f-82d1-0fdf4f685c5a",
+      "name": "Append row in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "nZHplNtmclaek6SC",
+          "name": "Ayushman's Credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('Information Extractor1').item.json.output.title }}",
+        "regionCode": "IN",
+        "categoryId": "28",
+        "options": {
+          "description": "={{ $('Information Extractor1').item.json.output.description }}",
+          "notifySubscribers": true,
+          "publicStatsViewable": true,
+          "tags": "={{ $('Information Extractor1').item.json.output.hashtags }}"
+        }
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        7376,
+        144
+      ],
+      "id": "1683060a-4636-44d3-853b-4ff1d4bfb8f2",
+      "name": "Upload a video",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "NN4863MUBIfDqEbh",
+          "name": "Ayushman's YouTube account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.output }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "title",
+              "description": "title"
+            },
+            {
+              "name": "description",
+              "description": "description"
+            },
+            {
+              "name": "hashtags",
+              "description": "hashtags"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        -688,
+        64
+      ],
+      "id": "a4aaec27-09b6-4716-9b1a-ede2b841f63e",
+      "name": "Information Extractor1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.articles[0].title }},\n{{ $json.articles[0].content }}",
+        "options": {
+          "systemMessage": "=You are a growth-focused AI content strategist for an AI automation company.\n\nInputs:\n{{ $json.articles[0].title }},{{ $json.articles[0].content }}\n\nYour task:\nUsing the provided tech automation trends, generate ONE unique YouTube Shorts video idea.\n\nRules:\n- The idea must show a real business pain point\n- Clearly show how automation saves time, cost, or effort\n- Do NOT mention tools or platforms\n- The idea must feel practical and realistic\n- The idea must subtly position the company as the solution\n\n\nOutput format:\n{\n  \"video_idea\": \"\",\n  \"target_business\": \"\",\n  \"core_pain\": \"\",\n  \"automation_benefit\": \"\"\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -1584,
+        64
+      ],
+      "id": "5bd0f281-7b93-4fa3-9cae-75f8f8c3e961",
+      "name": "Idea generator"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output }}",
+        "options": {
+          "systemMessage": "You are a professional short-form video scriptwriter for AI automation companies.\n\nUsing the provided video idea:\n- Write a 60-second YouTube Shorts script\n- Keep sentences short and impactful\n- Include natural dialogues or narration\n- Focus on before vs after automation\n- No technical jargon\n- Business-friendly language\n\nOutput format:\n{\n  \"hook\": \"\",\n  \"full_script\": \"\",\n  \"cta\": \"\"\n}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -112,
+        48
+      ],
+      "id": "2c935e47-bcea-4b73-bb5d-66f181c00dbf",
+      "name": "script generator"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output }}",
+        "options": {
+          "systemMessage": "=You are an expert cinematic prompt engineer for Veo3.\n \ninput:  {{ $json.output }}\n\nTask:\nUsing the provided script, generate 8 scene-level cinematic video prompts.\n\nRules:\n- Each scene must visually continue the story\n- Each scene duration: ~7–8 seconds\n- Include environment, lighting, camera movement\n- Include on-screen dialogue or narration text\n- Corporate, modern, realistic visuals\n- No fantasy or abstract scenes\n\nOutput format:\n{\n  \"scene_1\": { \"prompt\": \"\", \"dialogue\": \"\" },\n  \"scene_2\": { \"prompt\": \"\", \"dialogue\": \"\" },\n  ...\n  \"scene_8\": { \"prompt\": \"\", \"dialogue\": \"\" }\n}\n "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        208,
+        48
+      ],
+      "id": "386c43e8-a348-4172-bbef-eaddcd298fe6",
+      "name": "prompt generator"
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.output }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "\"scene_1\"",
+              "description": "\"scene_1\""
+            },
+            {
+              "name": "\"scene_2\"",
+              "description": "\"scene_2\""
+            },
+            {
+              "name": "\"scene_3\"",
+              "description": "\"scene_3\""
+            },
+            {
+              "name": "\"scene_4\"",
+              "description": "\"scene_4\""
+            },
+            {
+              "name": "\"scene_5\"",
+              "description": "\"scene_5\""
+            },
+            {
+              "name": "\"scene_6\"",
+              "description": "\"scene_6\""
+            },
+            {
+              "name": "\"scene_7\"",
+              "description": "\"scene_7\""
+            },
+            {
+              "name": "\"scene_8\"",
+              "description": "\"scene_8\""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        544,
+        48
+      ],
+      "id": "ec936667-4a7c-4985-9409-f363eaaeedb2",
+      "name": "prompt Extractor"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.shotstack.io/stage/render",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "Hr3J3FgT2bsjDilQpWKAMtNEyn00OeTjDhQd2iT0"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"timeline\": {\n    \"tracks\": [\n      {\n        \"clips\": [\n          {\n            \"asset\": {\n              \"type\": \"video\",\n              \"src\": \"https://ik.imagekit.io/2uy7yxv4v/Attachments/1.mp4\"\n            },\n            \"start\": 0,\n            \"length\": 8\n          },\n          {\n            \"asset\": {\n              \"type\": \"video\",\n              \"src\": \"https://ik.imagekit.io/2uy7yxv4v/Attachments/2.mp4\"\n            },\n            \"start\": 8,\n            \"length\": 8\n          },\n          {\n            \"asset\": {\n              \"type\": \"video\",\n              \"src\": \"https://ik.imagekit.io/2uy7yxv4v/Attachments/3.mp4\"\n            },\n            \"start\": 16,\n            \"length\": 8\n          },\n          {\n            \"asset\": {\n              \"type\": \"video\",\n              \"src\": \"https://ik.imagekit.io/2uy7yxv4v/Attachments/4.mp4\"\n            },\n            \"start\": 24,\n            \"length\": 8\n          },\n          {\n            \"asset\": {\n              \"type\": \"video\",\n              \"src\": \"https://ik.imagekit.io/2uy7yxv4v/Attachments/5.mp4\"\n            },\n            \"start\": 32,\n            \"length\": 8\n          },\n          {\n            \"asset\": {\n              \"type\": \"video\",\n              \"src\": \"https://ik.imagekit.io/2uy7yxv4v/Attachments/6.mp4\"\n            },\n            \"start\": 40,\n            \"length\": 8\n          },\n          {\n            \"asset\": {\n              \"type\": \"video\",\n              \"src\": \"https://ik.imagekit.io/2uy7yxv4v/Attachments/7.mp4\"\n            },\n            \"start\": 48,\n            \"length\": 8\n          },\n          {\n            \"asset\": {\n              \"type\": \"video\",\n              \"src\": \"https://ik.imagekit.io/2uy7yxv4v/Attachments/8.mp4\"\n            },\n            \"start\": 56,\n            \"length\": 8\n          }\n        ]\n      }\n    ]\n  },\n  \"output\": {\n    \"format\": \"mp4\",\n    \"resolution\": \"preview\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        6144,
+        32
+      ],
+      "id": "a03b82d4-90c7-4fdb-b6a0-5497a2bae3fc",
+      "name": "render Id generator"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.shotstack.io/stage/render/{{ $json.response.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "Hr3J3FgT2bsjDilQpWKAMtNEyn00OeTjDhQd2iT0"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        6368,
+        32
+      ],
+      "id": "4ea85099-1c6a-40bf-940c-71648fe9325c",
+      "name": "video generator"
+    },
+    {
+      "parameters": {
+        "numberInputs": 8
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        5888,
+        -64
+      ],
+      "id": "1d3c0892-5722-4bc9-aaf3-f5fc0aafef17",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://upload.imagekit.io/api/v1/files/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "file",
+              "value": "={{ $json.webContentLink }}"
+            },
+            {
+              "name": "folder",
+              "value": "/audio"
+            },
+            {
+              "name": "useUniqueFileName",
+              "value": "true"
+            },
+            {
+              "name": "fileName",
+              "value": "={{ $json.webContentLink }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5104,
+        112
+      ],
+      "id": "3f431217-6a05-4531-ab57-3465585cd433",
+      "name": "HTTP Request32",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "LFRPmI51pGXsIDxM",
+          "name": "imagekit private "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://upload.imagekit.io/api/v1/files/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "file",
+              "value": "={{ $json.webContentLink }}"
+            },
+            {
+              "name": "folder",
+              "value": "/audio"
+            },
+            {
+              "name": "useUniqueFileName",
+              "value": "true"
+            },
+            {
+              "name": "fileName",
+              "value": "={{ $json.webContentLink }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5104,
+        272
+      ],
+      "id": "863a4a79-d669-41e2-a3eb-426b3b7b015e",
+      "name": "HTTP Request31",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "LFRPmI51pGXsIDxM",
+          "name": "imagekit private "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://upload.imagekit.io/api/v1/files/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "file",
+              "value": "={{ $json.webContentLink }}"
+            },
+            {
+              "name": "folder",
+              "value": "/audio"
+            },
+            {
+              "name": "useUniqueFileName",
+              "value": "true"
+            },
+            {
+              "name": "fileName",
+              "value": "={{ $json.webContentLink }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5104,
+        592
+      ],
+      "id": "ab1a26db-09fa-46be-8f11-f4714cecbdf1",
+      "name": "HTTP Request6",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "LFRPmI51pGXsIDxM",
+          "name": "imagekit private "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://upload.imagekit.io/api/v1/files/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "file",
+              "value": "={{ $json.webContentLink }}"
+            },
+            {
+              "name": "folder",
+              "value": "/audio"
+            },
+            {
+              "name": "useUniqueFileName",
+              "value": "true"
+            },
+            {
+              "name": "fileName",
+              "value": "={{ $json.webContentLink }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5104,
+        -48
+      ],
+      "id": "79723709-ec8a-4b64-9909-828df3dd235a",
+      "name": "HTTP Request5",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "LFRPmI51pGXsIDxM",
+          "name": "imagekit private "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://upload.imagekit.io/api/v1/files/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "file",
+              "value": "={{ $json.webContentLink }}"
+            },
+            {
+              "name": "folder",
+              "value": "/audio"
+            },
+            {
+              "name": "useUniqueFileName",
+              "value": "true"
+            },
+            {
+              "name": "fileName",
+              "value": "={{ $json.webContentLink }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5104,
+        -368
+      ],
+      "id": "45e9dc5d-e92f-4ead-9b53-ecbc12b72a05",
+      "name": "HTTP Request4",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "LFRPmI51pGXsIDxM",
+          "name": "imagekit private "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://upload.imagekit.io/api/v1/files/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "file",
+              "value": "={{ $json.webContentLink }}"
+            },
+            {
+              "name": "folder",
+              "value": "/audio"
+            },
+            {
+              "name": "useUniqueFileName",
+              "value": "true"
+            },
+            {
+              "name": "fileName",
+              "value": "={{ $json.webContentLink }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5104,
+        432
+      ],
+      "id": "bd549057-c728-4a0f-9fb5-35bfbbf376b8",
+      "name": "HTTP Request3",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "LFRPmI51pGXsIDxM",
+          "name": "imagekit private "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://upload.imagekit.io/api/v1/files/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "file",
+              "value": "={{ $json.webContentLink }}"
+            },
+            {
+              "name": "folder",
+              "value": "/audio"
+            },
+            {
+              "name": "useUniqueFileName",
+              "value": "true"
+            },
+            {
+              "name": "fileName",
+              "value": "={{ $json.webContentLink }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5104,
+        -208
+      ],
+      "id": "1eae1e65-0e78-4830-80b5-fa22ca8f7da1",
+      "name": "HTTP Request2",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "LFRPmI51pGXsIDxM",
+          "name": "imagekit private "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://upload.imagekit.io/api/v1/files/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "file",
+              "value": "={{ $json.webContentLink }}"
+            },
+            {
+              "name": "folder",
+              "value": "/audio"
+            },
+            {
+              "name": "useUniqueFileName",
+              "value": "true"
+            },
+            {
+              "name": "fileName",
+              "value": "={{ $json.webContentLink }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5104,
+        -528
+      ],
+      "id": "8b500b95-9868-4c7c-8d14-a28ee6c4f4e2",
+      "name": "HTTP Request1",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "LFRPmI51pGXsIDxM",
+          "name": "imagekit private "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "data",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU",
+          "mode": "list",
+          "cachedResultName": "8 sec videos for Wango YT",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3952,
+        848
+      ],
+      "id": "71a32eaa-fcc4-42a0-8916-fb92afebc8ef",
+      "name": "Google Drive9",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "IzjregAsOrXu4yx5",
+          "name": "Ayushman's credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "data",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU",
+          "mode": "list",
+          "cachedResultName": "8 sec videos for Wango YT",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3952,
+        592
+      ],
+      "id": "b23e6948-216f-42f8-8e61-b15073fd36db",
+      "name": "Google Drive8",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "IzjregAsOrXu4yx5",
+          "name": "Ayushman's credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "data",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU",
+          "mode": "list",
+          "cachedResultName": "8 sec videos for Wango YT",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3952,
+        368
+      ],
+      "id": "15f8b7af-ac6d-487e-8ad7-8fa3c75c4818",
+      "name": "Google Drive1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "IzjregAsOrXu4yx5",
+          "name": "Ayushman's credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "data",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU",
+          "mode": "list",
+          "cachedResultName": "8 sec videos for Wango YT",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3952,
+        144
+      ],
+      "id": "2c215461-6324-44d4-948a-e0c4f10443c1",
+      "name": "Google Drive7",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "IzjregAsOrXu4yx5",
+          "name": "Ayushman's credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "data",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU",
+          "mode": "list",
+          "cachedResultName": "8 sec videos for Wango YT",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3952,
+        -112
+      ],
+      "id": "9e5fc264-9834-4df5-b693-7895ee57f4d3",
+      "name": "Google Drive6",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "IzjregAsOrXu4yx5",
+          "name": "Ayushman's credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "data",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU",
+          "mode": "list",
+          "cachedResultName": "8 sec videos for Wango YT",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3952,
+        -368
+      ],
+      "id": "9dc5765a-07ef-404d-ae74-94d8e10aa701",
+      "name": "Google Drive5",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "IzjregAsOrXu4yx5",
+          "name": "Ayushman's credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "data",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU",
+          "mode": "list",
+          "cachedResultName": "8 sec videos for Wango YT",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3952,
+        -592
+      ],
+      "id": "c1901a4d-a04c-44a9-8f06-11e3421d378b",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "IzjregAsOrXu4yx5",
+          "name": "Ayushman's credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "data",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU",
+          "mode": "list",
+          "cachedResultName": "8 sec videos for Wango YT",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1w6c1CMFFB49yPUcQabAtYbRY-iiKO-nU"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3952,
+        -816
+      ],
+      "id": "5ce002ac-e385-458f-89aa-429d103ce4f7",
+      "name": "Google Drive4",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "IzjregAsOrXu4yx5",
+          "name": "Ayushman's credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-fast-generate-preview:predictLongRunning",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyDm4aZxhbYj4hbQtBmYBuKNw2ORmUeo6-g"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"instances\": [\n    {\n      \"prompt\": \"{{ $json.output['\"scene_8\"'] }}\"\n    }\n  ],\n  \"parameters\": {\n      \"aspectRatio\": \"9:16\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2128,
+        1696
+      ],
+      "id": "558edb64-5dfb-4433-970d-e83eb99d3c3d",
+      "name": "HTTP Request30"
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2800,
+        1792
+      ],
+      "id": "d36234b2-2e0f-4b81-885a-de30107a8899",
+      "name": "Wait8",
+      "webhookId": "1145c52c-9117-4435-9640-87ec9ecb1c9e"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3efd00b4-62ba-430d-8ba3-41db84055530",
+              "leftValue": "={{ $json.toJsonString() }}",
+              "rightValue": "done",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2608,
+        1696
+      ],
+      "id": "883e2775-55a8-4966-a484-2c13508b3083",
+      "name": "If8"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.response.generateVideoResponse.generatedSamples[0].video.uri }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          },
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "dialogue_example.mp4"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3152,
+        1680
+      ],
+      "id": "b5bd2154-9ff2-4ed6-8e2f-30deec7c55bc",
+      "name": "HTTP Request29"
+    },
+    {
+      "parameters": {
+        "url": "=https://generativelanguage.googleapis.com/v1beta/{{ $json.name }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2352,
+        1696
+      ],
+      "id": "07333c85-4a57-4304-a335-2d8e255c8e5f",
+      "name": "HTTP Request28"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-fast-generate-preview:predictLongRunning",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyDm4aZxhbYj4hbQtBmYBuKNw2ORmUeo6-g"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"instances\": [\n    {\n      \"prompt\": \"{{ $json.output['\"scene_7\"'] }}\"\n    }\n  ],\n  \"parameters\": {\n      \"aspectRatio\": \"9:16\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2128,
+        1248
+      ],
+      "id": "6f975fd8-eeb1-489e-81bf-c0b17e20da0d",
+      "name": "HTTP Request27"
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2800,
+        1344
+      ],
+      "id": "28f37f58-49a3-44f3-bc17-994ac7e55d93",
+      "name": "Wait7",
+      "webhookId": "1145c52c-9117-4435-9640-87ec9ecb1c9e"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3efd00b4-62ba-430d-8ba3-41db84055530",
+              "leftValue": "={{ $json.toJsonString() }}",
+              "rightValue": "done",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2592,
+        1248
+      ],
+      "id": "c82dca22-8686-4722-b6b8-b797e78cd7fc",
+      "name": "If7"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.response.generateVideoResponse.generatedSamples[0].video.uri }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          },
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "dialogue_example.mp4"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3168,
+        1232
+      ],
+      "id": "3231d11f-f6e9-4766-b404-0efa7401181e",
+      "name": "HTTP Request26"
+    },
+    {
+      "parameters": {
+        "url": "=https://generativelanguage.googleapis.com/v1beta/{{ $json.name }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2352,
+        1248
+      ],
+      "id": "578e0e2b-d0f6-4c5d-9459-4f5e663fed0a",
+      "name": "HTTP Request25"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-fast-generate-preview:predictLongRunning",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyDm4aZxhbYj4hbQtBmYBuKNw2ORmUeo6-g"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"instances\": [\n    {\n      \"prompt\": \"{{ $json.output['\"scene_6\"'] }}\"\n    }\n  ],\n  \"parameters\": {\n      \"aspectRatio\": \"9:16\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2128,
+        768
+      ],
+      "id": "6318a576-df91-4427-ab44-ec437bcafe39",
+      "name": "HTTP Request24"
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2800,
+        864
+      ],
+      "id": "f91cbfb1-966e-4ee4-9197-8232f42df3b9",
+      "name": "Wait6",
+      "webhookId": "1145c52c-9117-4435-9640-87ec9ecb1c9e"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3efd00b4-62ba-430d-8ba3-41db84055530",
+              "leftValue": "={{ $json.toJsonString() }}",
+              "rightValue": "done",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2608,
+        768
+      ],
+      "id": "c9e3bbbf-8ad9-40ea-a905-991032d81d42",
+      "name": "If6"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.response.generateVideoResponse.generatedSamples[0].video.uri }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          },
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "dialogue_example.mp4"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3152,
+        752
+      ],
+      "id": "527164a5-98a0-400d-a0ba-0187e36f65fd",
+      "name": "HTTP Request23"
+    },
+    {
+      "parameters": {
+        "url": "=https://generativelanguage.googleapis.com/v1beta/{{ $json.name }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2352,
+        768
+      ],
+      "id": "76082ee4-c34a-4a02-acea-90a994134814",
+      "name": "HTTP Request22"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-fast-generate-preview:predictLongRunning",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyDm4aZxhbYj4hbQtBmYBuKNw2ORmUeo6-g"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"instances\": [\n    {\n      \"prompt\": \"{{ $json.output['\"scene_5\"'] }}\"\n    }\n  ],\n  \"parameters\": {\n      \"aspectRatio\": \"9:16\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2128,
+        320
+      ],
+      "id": "0c5d9d52-56c1-49e0-aeb3-75167dfb7d11",
+      "name": "HTTP Request21"
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2800,
+        416
+      ],
+      "id": "2d8ba8fa-425a-4bda-840c-27da26e4254d",
+      "name": "Wait5",
+      "webhookId": "1145c52c-9117-4435-9640-87ec9ecb1c9e"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3efd00b4-62ba-430d-8ba3-41db84055530",
+              "leftValue": "={{ $json.toJsonString() }}",
+              "rightValue": "done",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2592,
+        320
+      ],
+      "id": "2d36fd8a-d47f-41cd-bd53-b8d352b2032a",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.response.generateVideoResponse.generatedSamples[0].video.uri }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          },
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "dialogue_example.mp4"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3168,
+        304
+      ],
+      "id": "c4ca7bb8-3b38-4ac3-9820-dab111e2abb3",
+      "name": "HTTP Request20"
+    },
+    {
+      "parameters": {
+        "url": "=https://generativelanguage.googleapis.com/v1beta/{{ $json.name }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2352,
+        320
+      ],
+      "id": "883ca5a1-6230-46d5-a0b1-c06b101e477a",
+      "name": "HTTP Request19"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-fast-generate-preview:predictLongRunning",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyDm4aZxhbYj4hbQtBmYBuKNw2ORmUeo6-g"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"instances\": [\n    {\n      \"prompt\": \"{{ $json.output['\"scene_4\"'] }}\"\n    }\n  ],\n  \"parameters\": {\n      \"aspectRatio\": \"9:16\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2128,
+        -176
+      ],
+      "id": "019f8590-4b27-409a-8ec2-844080ae8e0a",
+      "name": "HTTP Request18"
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2800,
+        -80
+      ],
+      "id": "c91f94ed-a14b-4bd9-afa2-7e252835ad66",
+      "name": "Wait4",
+      "webhookId": "1145c52c-9117-4435-9640-87ec9ecb1c9e"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3efd00b4-62ba-430d-8ba3-41db84055530",
+              "leftValue": "={{ $json.toJsonString() }}",
+              "rightValue": "done",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2608,
+        -176
+      ],
+      "id": "6746224d-9ef5-4609-b435-a0fd57723034",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.response.generateVideoResponse.generatedSamples[0].video.uri }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          },
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "dialogue_example.mp4"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3152,
+        -192
+      ],
+      "id": "93ac1a55-601f-4a2f-b374-9b308bd1b807",
+      "name": "HTTP Request17"
+    },
+    {
+      "parameters": {
+        "url": "=https://generativelanguage.googleapis.com/v1beta/{{ $json.name }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2352,
+        -176
+      ],
+      "id": "54e060ea-b0cc-4eb0-aa99-188e0fbed476",
+      "name": "HTTP Request16"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-fast-generate-preview:predictLongRunning",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyDm4aZxhbYj4hbQtBmYBuKNw2ORmUeo6-g"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"instances\": [\n    {\n      \"prompt\": \"{{ $json.output['\"scene_3\"'] }}\"\n    }\n  ],\n  \"parameters\": {\n      \"aspectRatio\": \"9:16\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2128,
+        -624
+      ],
+      "id": "dcbfc727-f8d7-4028-a47b-f90955aa62df",
+      "name": "HTTP Request15"
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2800,
+        -528
+      ],
+      "id": "8cd2b55c-bb38-426d-9fec-a11c36fa4f39",
+      "name": "Wait",
+      "webhookId": "1145c52c-9117-4435-9640-87ec9ecb1c9e"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3efd00b4-62ba-430d-8ba3-41db84055530",
+              "leftValue": "={{ $json.toJsonString() }}",
+              "rightValue": "done",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2592,
+        -624
+      ],
+      "id": "61fef64b-ff2e-4f6a-8694-0201a6a48ca6",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.response.generateVideoResponse.generatedSamples[0].video.uri }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          },
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "dialogue_example.mp4"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3168,
+        -640
+      ],
+      "id": "55959136-a716-49c1-b952-2fb5d8c8974d",
+      "name": "HTTP Request14"
+    },
+    {
+      "parameters": {
+        "url": "=https://generativelanguage.googleapis.com/v1beta/{{ $json.name }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2352,
+        -624
+      ],
+      "id": "9b4e4189-b6bd-4348-bbdb-72478676b9ff",
+      "name": "HTTP Request13"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-fast-generate-preview:predictLongRunning",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyDm4aZxhbYj4hbQtBmYBuKNw2ORmUeo6-g"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"instances\": [\n    {\n      \"prompt\": \"{{ $json.output['\"scene_2\"'] }}\"\n    }\n  ],\n  \"parameters\": {\n      \"aspectRatio\": \"9:16\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2144,
+        -1040
+      ],
+      "id": "2dc44247-5ee2-4269-8233-5475f8a899e6",
+      "name": "HTTP Request12"
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2816,
+        -944
+      ],
+      "id": "8d94c8e8-2a45-4b65-9d07-410b4871fa27",
+      "name": "Wait3",
+      "webhookId": "1145c52c-9117-4435-9640-87ec9ecb1c9e"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3efd00b4-62ba-430d-8ba3-41db84055530",
+              "leftValue": "={{ $json.toJsonString() }}",
+              "rightValue": "done",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2624,
+        -1040
+      ],
+      "id": "3e4c8291-0f41-4073-a2c3-1b9efa5f46c7",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.response.generateVideoResponse.generatedSamples[0].video.uri }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          },
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "dialogue_example.mp4"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3168,
+        -1056
+      ],
+      "id": "bab91f8c-4bda-408a-b916-00e7f7a3fb06",
+      "name": "HTTP Request11"
+    },
+    {
+      "parameters": {
+        "url": "=https://generativelanguage.googleapis.com/v1beta/{{ $json.name }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2368,
+        -1040
+      ],
+      "id": "caa40feb-a8e3-49e5-91ad-3bb3e775e771",
+      "name": "HTTP Request10"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/veo-3.1-fast-generate-preview:predictLongRunning",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyDm4aZxhbYj4hbQtBmYBuKNw2ORmUeo6-g"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"instances\": [\n    {\n      \"prompt\": \"{{ $json.output['\"scene_1\"'] }}\"\n    }\n  ],\n  \"parameters\": {\n      \"aspectRatio\": \"9:16\"\n  }\n}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 2000
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2144,
+        -1488
+      ],
+      "id": "db39c9d9-367f-454b-a37c-e4d8e20f1684",
+      "name": "HTTP Request9"
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2816,
+        -1392
+      ],
+      "id": "ff2cd9a8-6913-4213-a246-1b1b927d0691",
+      "name": "Wait2",
+      "webhookId": "1145c52c-9117-4435-9640-87ec9ecb1c9e"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3efd00b4-62ba-430d-8ba3-41db84055530",
+              "leftValue": "={{ $json.toJsonString() }}",
+              "rightValue": "done",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2608,
+        -1488
+      ],
+      "id": "288590af-f914-4135-8579-d67ba6276777",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.response.generateVideoResponse.generatedSamples[0].video.uri }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {
+          "redirect": {
+            "redirect": {}
+          },
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "dialogue_example.mp4"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3184,
+        -1504
+      ],
+      "id": "47cd82d7-9abd-4859-82df-4ce0cb478fb2",
+      "name": "HTTP Request8"
+    },
+    {
+      "parameters": {
+        "url": "=https://generativelanguage.googleapis.com/v1beta/{{ $json.name }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "AIzaSyBKWF5wTGEXrLxWjeaQ2YLf6_o6CneiI-s"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2368,
+        -1488
+      ],
+      "id": "8e5830dc-1ee4-4445-b846-3a7cd86194f2",
+      "name": "HTTP Request7"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        []
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Idea generator",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "script generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "prompt generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "prompt Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        []
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request35",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "video generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Idea generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request35": {
+      "main": [
+        [
+          {
+            "node": "Upload a video",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Drive2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive2": {
+      "main": [
+        []
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent3",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Information Extractor1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent3": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent3",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload a video": {
+      "main": [
+        []
+      ]
+    },
+    "Information Extractor1": {
+      "main": [
+        [
+          {
+            "node": "script generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Idea generator": {
+      "main": [
+        [
+          {
+            "node": "AI Agent3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "script generator": {
+      "main": [
+        [
+          {
+            "node": "prompt generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompt generator": {
+      "main": [
+        [
+          {
+            "node": "prompt Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "prompt Extractor": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request30",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request27",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request24",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request21",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request18",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request15",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request12",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "render Id generator": {
+      "main": [
+        [
+          {
+            "node": "video generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "video generator": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "render Id generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request32": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "HTTP Request31": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "HTTP Request6": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 7
+          }
+        ]
+      ]
+    },
+    "HTTP Request5": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 6
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive9": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive8": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request31",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive7": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request32",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive6": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive5": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive4": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request30": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request28",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait8": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request28",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If8": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request29",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request29": {
+      "main": [
+        [
+          {
+            "node": "Google Drive9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request28": {
+      "main": [
+        [
+          {
+            "node": "If8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request27": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request25",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait7": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request25",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If7": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request26",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request26": {
+      "main": [
+        [
+          {
+            "node": "Google Drive8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request25": {
+      "main": [
+        [
+          {
+            "node": "If7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request24": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request22",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait6": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request22",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If6": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request23",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request23": {
+      "main": [
+        [
+          {
+            "node": "Google Drive1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request22": {
+      "main": [
+        [
+          {
+            "node": "If6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request21": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request20",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request20": {
+      "main": [
+        [
+          {
+            "node": "Google Drive7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request19": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request18": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request17",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request17": {
+      "main": [
+        [
+          {
+            "node": "Google Drive6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request16": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request15": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request14",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request14": {
+      "main": [
+        [
+          {
+            "node": "Google Drive5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request13": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request12": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request11",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request11": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request10": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request9": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request8",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request8": {
+      "main": [
+        [
+          {
+            "node": "Google Drive4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request7": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {
+    "HTTP Request": [
+      {
+        "json": {
+          "query": "latest AI automation trends helping businesses save time and cost",
+          "follow_up_questions": null,
+          "answer": null,
+          "images": [],
+          "results": [
+            {
+              "url": "https://blog.totaltek.com/how-ai-and-automation-are-reshaping-business-processes-in-2025",
+              "title": "How AI and Automation Are Reshaping Business Processes in 2025",
+              "content": "Companies that adopt AI-powered automation will achieve competitive advantages by boosting efficiency and decision-making and reducing costs by the year 2025.",
+              "score": 0.6864757,
+              "raw_content": null
+            },
+            {
+              "url": "https://www.cflowapps.com/ai-workflow-automation-trends/",
+              "title": "AI Workflow Automation Trends for 2025 - Cflow",
+              "content": "Agentic AI is becoming mainstream in workflow automation, enabling intelligent decision-making without human intervention.",
+              "score": 0.5717911,
+              "raw_content": null
+            },
+            {
+              "url": "https://www.m1-project.com/blog/how-can-ai-help-your-business-reduce-costs",
+              "title": "How Can AI Help Your Business Reduce Costs - M1 Project",
+              "content": "Using AI technologies, companies can improve efficiency by reducing labor ai reduce cost and increasing the speed at which tasks are completed.",
+              "score": 0.559411,
+              "raw_content": null
+            },
+            {
+              "url": "https://www.businessnewsdaily.com/9402-artificial-intelligence-business-trends.html",
+              "title": "How Artificial Intelligence Will Transform Businesses",
+              "content": "Companies are using AI to optimize inventory levels, plan efficient delivery routes, predict supply chain disruptions, and automate warehouse",
+              "score": 0.4574039,
+              "raw_content": null
+            },
+            {
+              "url": "https://cloud.google.com/transform/101-real-world-generative-ai-use-cases-from-industry-leaders",
+              "title": "Real-world gen AI use cases from the world's leading organizations",
+              "content": "Uber is using AI agents to help employees be more productive, save time, and be even more effective at work. For customer service",
+              "score": 0.44217938,
+              "raw_content": null
+            }
+          ],
+          "response_time": 0.65,
+          "request_id": "64786bee-9ff9-41af-b380-d3a80796903c"
+        }
+      }
+    ],
+    "Code in JavaScript": [
+      {
+        "json": {
+          "articles": [
+            {
+              "title": "How AI and Automation Are Reshaping Business Processes in 2025",
+              "content": "Companies that adopt AI-powered automation will achieve competitive advantages by boosting efficiency and decision-making and reducing costs by the year 2025."
+            },
+            {
+              "title": "AI Workflow Automation Trends for 2025 - Cflow",
+              "content": "Agentic AI is becoming mainstream in workflow automation, enabling intelligent decision-making without human intervention."
+            },
+            {
+              "title": "How Can AI Help Your Business Reduce Costs - M1 Project",
+              "content": "Using AI technologies, companies can improve efficiency by reducing labor ai reduce cost and increasing the speed at which tasks are completed."
+            },
+            {
+              "title": "How Artificial Intelligence Will Transform Businesses",
+              "content": "Companies are using AI to optimize inventory levels, plan efficient delivery routes, predict supply chain disruptions, and automate warehouse"
+            },
+            {
+              "title": "Real-world gen AI use cases from the world's leading organizations",
+              "content": "Uber is using AI agents to help employees be more productive, save time, and be even more effective at work. For customer service"
+            }
+          ]
+        }
+      }
+    ],
+    "Append row in sheet": [
+      {
+        "json": {
+          "prompt 1": "A mid-30s professional, male or female, sits hunched in a modern corporate office cubicle. Harsh, draining fluorescent lighting. The camera starts with a medium shot, then rapidly pans across multiple open browser tabs on a large monitor: CRM, ad platform, analytics, spreadsheet. The employee rapidly clicks between tabs, their expression growing increasingly strained and frustrated. Visual elements: stacks of reports on desk, coffee cup. | Still manually digging through data every week? Drowning in tabs and spreadsheets? Every Monday, it's the same routine. Hours lost.",
+          "prompt 2": "Same corporate office environment, still under harsh lighting. A tight, slightly shaky handheld close-up focuses on the employee's fingers. They are rapidly copying data from one spreadsheet cell and pasting it into another, then hitting 'refresh' repeatedly on a web page. A fast-spinning clock graphic briefly overlays the screen in the corner. The employee lets out a frustrated sigh, running a hand through their hair, emphasizing exhaustion. | Manually pulling numbers from every platform. Copying, pasting, refreshing. You're building reports, not driving strategy. Missed deadlines. Human errors.",
+          "prompt 3": "The camera executes a slow, mournful dolly zoom out from the employee's overwhelmed face to reveal a cluttered desk with multiple monitors displaying jumbled, dense, unorganized data. Overall dimming lighting, creating a sense of confinement and stress. The employee slumps back in their chair, head in hands, the visible weight of the work crushing them. | And that crushing feeling of wasted time. This isn't just tedious. It's a drag on your business.",
+          "prompt 4": "A static wide shot of the employee at their desk, looking defeated and contemplative. Lighting is muted, suggesting a lack of clarity. A prominent, stark text overlay appears on screen: 'Manual Data = Missed Opportunities & Wasted Hours.' The employee stares blankly at the complex, overwhelming data on their screen, the text overlay reinforcing the negative impact. | Slow insights mean delayed decisions. And a real hit to your competitive edge.",
+          "prompt 5": "A smooth, steady crane shot lifts over the same employee, who is now visibly relaxed and calm. The environment has transitioned to a bright, modern open-plan office bathed in soft, inviting natural light streaming through large windows. The employee sips coffee, casually glancing at a single, clean, dynamic dashboard displayed on a large, wall-mounted screen. A faint smile of relief crosses their face. | Imagine this instead: One clear, intuitive dashboard. All your critical data, flowing automatically.",
+          "prompt 6": "Within the same bright, modern office, a dynamic, energetic close-up tracking shot follows the employee as they smoothly navigate the intuitive dashboard interface on a sleek tablet. Seamless, real-time data visualizations update fluidly on the larger screen behind them. The lighting is even and highlights clarity. The employee effortlessly scrolls through charts and graphs, the data appearing instantly, clearly, with no unnecessary clicks or tabs. | Real-time insights, right at your fingertips. No manual effort. No more endless tabs. Just clarity.",
+          "prompt 7": "A stable medium shot in a modern collaborative huddle space. Bright, focused lighting illuminates the screen and the employee. The employee confidently nods, makes a quick, decisive note on their tablet, and points to a key trend on the dashboard with a look of proactive understanding. A clean, impactful text overlay appears: 'Unlock Instant, Accurate Insights. Make Data-Driven Decisions in Minutes, Not Hours. Gain Your Competitive Edge.' | You see trends instantly. You make data-driven decisions in minutes, not hours. Shift your focus from data entry to strategic growth.",
+          "prompt 8": "A wide, sweeping dolly shot in a sleek, modern conference room or collaborative workspace. The now confident employee stands at the head of a table, leading an impactful discussion with colleagues, gesturing emphatically to a large screen displaying simplified, actionable insights. Professional, bright, and empowering lighting. The employee maintains eye contact with colleagues, exuding confidence and leadership. The scene concludes with a clear call to action on screen. | Empower your teams. Outpace the competition. It's time to work smarter, not harder. Ready to transform your data insights? Click the link to discover how AI automation can unlock your business potential!"
+        }
+      }
+    ],
+    "Idea generator": [
+      {
+        "json": {
+          "output": "```json\n{\n  \"video_idea\": \"Title: Stop Drowning in Data! \\n\\n**Visuals:** \\n**Scene 1 (Pain):** Start with a rapid-cut montage: a visibly frustrated employee (e.g., in marketing, sales, or operations) juggling multiple open browser tabs (CRM, ad platform, analytics tool, spreadsheet). Quick close-ups of them manually copying and pasting numbers, hitting refresh, sighing, and looking overwhelmed by endless data entry for a weekly performance report. Show a clock spinning rapidly or a 'time passed' graphic to emphasize hours spent.\\n\\n**Scene 2 (Transition):** A brief, stark shot of a messy desk with piles of paper or jumbled data on screens. Text overlay appears: 'Manual Data = Missed Opportunities & Wasted Hours.'\\n\\n**Scene 3 (Automation Benefit):** Smooth transition to the *same employee*, now looking calm and confident, sipping coffee. They casually glance at a single, clean, dynamic dashboard on a large screen or tablet. Data is flowing seamlessly, charts are updating in real-time. They nod decisively, perhaps making a quick note, and immediately move to a strategic discussion with a colleague, looking proactive and prepared. Text overlay appears: 'Unlock Instant, Accurate Insights. Make Data-Driven Decisions in Minutes, Not Hours. Gain Your Competitive Edge.'\\n\\n**Ending:** A quick shot of the confident employee leading a brief, impactful discussion, implying that their time is now spent on strategy rather than compilation. The overall feeling is one of clarity, speed, and strategic advantage.\",\n  \"target_business\": \"Medium to large businesses with sales, marketing, or operations departments reliant on cross-platform data for reporting and decision-making.\",\n  \"core_pain\": \"Excessive time and effort spent on manual data aggregation, reporting, and analysis from disparate sources, leading to delayed insights, human error, and hindered strategic decision-making.\",\n  \"automation_benefit\": \"Achieve instant, accurate, and consolidated data insights, dramatically reducing reporting time, eliminating manual effort, and empowering rapid, data-driven strategic decisions for a significant competitive advantage.\"\n}\n```"
+        }
+      }
+    ],
+    "script generator": [
+      {
+        "json": {
+          "output": "```json\n{\n  \"hook\": \"Still manually digging through data every week? Drowning in tabs and spreadsheets?\",\n  \"full_script\": [\n    {\n      \"scene\": \"Scene 1 (Pain)\",\n      \"visuals\": \"Rapid-cut montage: Frustrated employee juggling multiple browser tabs (CRM, ad platform, analytics, spreadsheet). Quick close-ups of them manually copying/pasting, hitting refresh, sighing. Clock spinning fast.\",\n      \"dialogue\": \"Every Monday, it's the same routine. Hours lost. Manually pulling numbers from every platform. Copying, pasting, refreshing. You're building reports, not driving strategy. Missed deadlines. Human errors. And that crushing feeling of wasted time.\"\n    },\n    {\n      \"scene\": \"Scene 2 (Transition)\",\n      \"visuals\": \"Brief, stark shot of messy desk/jumbled data on screens. Text overlay: 'Manual Data = Missed Opportunities & Wasted Hours.'\",\n      \"dialogue\": \"This isn't just tedious. It's a drag on your business. Slow insights mean delayed decisions. And a real hit to your competitive edge.\"\n    },\n    {\n      \"scene\": \"Scene 3 (Automation Benefit)\",\n      \"visuals\": \"Smooth transition to the same employee, now calm, sipping coffee. Casually glancing at a single, clean, dynamic dashboard on a large screen/tablet. Data flows seamlessly, charts update in real-time. Employee nods decisively, makes a quick note, moves to a strategic discussion with a colleague, looking proactive. Text overlay: 'Unlock Instant, Accurate Insights. Make Data-Driven Decisions in Minutes, Not Hours. Gain Your Competitive Edge.'\",\n      \"dialogue\": \"Imagine this instead: One clear, intuitive dashboard. All your critical data, flowing automatically. Real-time insights, right at your fingertips. No manual effort. No more endless tabs. Just clarity. You see trends instantly. You make data-driven decisions in minutes, not hours.\"\n    },\n    {\n      \"scene\": \"Ending\",\n      \"visuals\": \"Quick shot of the confident employee leading an impactful discussion.\",\n      \"dialogue\": \"Shift your focus from data entry to strategic growth. Empower your teams. Outpace the competition. It's time to work smarter, not harder.\"\n    }\n  ],\n  \"cta\": \"Ready to transform your data insights? Click the link to discover how AI automation can unlock your business potential!\"\n}\n```"
+        }
+      }
+    ],
+    "prompt generator": [
+      {
+        "json": {
+          "output": "```json\n{\n  \"scene_1\": {\n    \"prompt\": \"A mid-30s professional, male or female, sits hunched in a modern corporate office cubicle. Harsh, draining fluorescent lighting. The camera starts with a medium shot, then rapidly pans across multiple open browser tabs on a large monitor: CRM, ad platform, analytics, spreadsheet. The employee rapidly clicks between tabs, their expression growing increasingly strained and frustrated. Visual elements: stacks of reports on desk, coffee cup.\",\n    \"dialogue\": \"Still manually digging through data every week? Drowning in tabs and spreadsheets? Every Monday, it's the same routine. Hours lost.\"\n  },\n  \"scene_2\": {\n    \"prompt\": \"Same corporate office environment, still under harsh lighting. A tight, slightly shaky handheld close-up focuses on the employee's fingers. They are rapidly copying data from one spreadsheet cell and pasting it into another, then hitting 'refresh' repeatedly on a web page. A fast-spinning clock graphic briefly overlays the screen in the corner. The employee lets out a frustrated sigh, running a hand through their hair, emphasizing exhaustion.\",\n    \"dialogue\": \"Manually pulling numbers from every platform. Copying, pasting, refreshing. You're building reports, not driving strategy. Missed deadlines. Human errors.\"\n  },\n  \"scene_3\": {\n    \"prompt\": \"The camera executes a slow, mournful dolly zoom out from the employee's overwhelmed face to reveal a cluttered desk with multiple monitors displaying jumbled, dense, unorganized data. Overall dimming lighting, creating a sense of confinement and stress. The employee slumps back in their chair, head in hands, the visible weight of the work crushing them.\",\n    \"dialogue\": \"And that crushing feeling of wasted time. This isn't just tedious. It's a drag on your business.\"\n  },\n  \"scene_4\": {\n    \"prompt\": \"A static wide shot of the employee at their desk, looking defeated and contemplative. Lighting is muted, suggesting a lack of clarity. A prominent, stark text overlay appears on screen: 'Manual Data = Missed Opportunities & Wasted Hours.' The employee stares blankly at the complex, overwhelming data on their screen, the text overlay reinforcing the negative impact.\",\n    \"dialogue\": \"Slow insights mean delayed decisions. And a real hit to your competitive edge.\"\n  },\n  \"scene_5\": {\n    \"prompt\": \"A smooth, steady crane shot lifts over the same employee, who is now visibly relaxed and calm. The environment has transitioned to a bright, modern open-plan office bathed in soft, inviting natural light streaming through large windows. The employee sips coffee, casually glancing at a single, clean, dynamic dashboard displayed on a large, wall-mounted screen. A faint smile of relief crosses their face.\",\n    \"dialogue\": \"Imagine this instead: One clear, intuitive dashboard. All your critical data, flowing automatically.\"\n  },\n  \"scene_6\": {\n    \"prompt\": \"Within the same bright, modern office, a dynamic, energetic close-up tracking shot follows the employee as they smoothly navigate the intuitive dashboard interface on a sleek tablet. Seamless, real-time data visualizations update fluidly on the larger screen behind them. The lighting is even and highlights clarity. The employee effortlessly scrolls through charts and graphs, the data appearing instantly, clearly, with no unnecessary clicks or tabs.\",\n    \"dialogue\": \"Real-time insights, right at your fingertips. No manual effort. No more endless tabs. Just clarity.\"\n  },\n  \"scene_7\": {\n    \"prompt\": \"A stable medium shot in a modern collaborative huddle space. Bright, focused lighting illuminates the screen and the employee. The employee confidently nods, makes a quick, decisive note on their tablet, and points to a key trend on the dashboard with a look of proactive understanding. A clean, impactful text overlay appears: 'Unlock Instant, Accurate Insights. Make Data-Driven Decisions in Minutes, Not Hours. Gain Your Competitive Edge.'\",\n    \"dialogue\": \"You see trends instantly. You make data-driven decisions in minutes, not hours. Shift your focus from data entry to strategic growth.\"\n  },\n  \"scene_8\": {\n    \"prompt\": \"A wide, sweeping dolly shot in a sleek, modern conference room or collaborative workspace. The now confident employee stands at the head of a table, leading an impactful discussion with colleagues, gesturing emphatically to a large screen displaying simplified, actionable insights. Professional, bright, and empowering lighting. The employee maintains eye contact with colleagues, exuding confidence and leadership. The scene concludes with a clear call to action on screen.\",\n    \"dialogue\": \"Empower your teams. Outpace the competition. It's time to work smarter, not harder. Ready to transform your data insights? Click the link to discover how AI automation can unlock your business potential!\"\n  }\n}\n```"
+        }
+      }
+    ],
+    "prompt Extractor": [
+      {
+        "json": {
+          "output": {
+            "\"scene_1\"": "A mid-30s professional, male or female, sits hunched in a modern corporate office cubicle. Harsh, draining fluorescent lighting. The camera starts with a medium shot, then rapidly pans across multiple open browser tabs on a large monitor: CRM, ad platform, analytics, spreadsheet. The employee rapidly clicks between tabs, their expression growing increasingly strained and frustrated. Visual elements: stacks of reports on desk, coffee cup. | Still manually digging through data every week? Drowning in tabs and spreadsheets? Every Monday, it's the same routine. Hours lost.",
+            "\"scene_2\"": "Same corporate office environment, still under harsh lighting. A tight, slightly shaky handheld close-up focuses on the employee's fingers. They are rapidly copying data from one spreadsheet cell and pasting it into another, then hitting 'refresh' repeatedly on a web page. A fast-spinning clock graphic briefly overlays the screen in the corner. The employee lets out a frustrated sigh, running a hand through their hair, emphasizing exhaustion. | Manually pulling numbers from every platform. Copying, pasting, refreshing. You're building reports, not driving strategy. Missed deadlines. Human errors.",
+            "\"scene_3\"": "The camera executes a slow, mournful dolly zoom out from the employee's overwhelmed face to reveal a cluttered desk with multiple monitors displaying jumbled, dense, unorganized data. Overall dimming lighting, creating a sense of confinement and stress. The employee slumps back in their chair, head in hands, the visible weight of the work crushing them. | And that crushing feeling of wasted time. This isn't just tedious. It's a drag on your business.",
+            "\"scene_4\"": "A static wide shot of the employee at their desk, looking defeated and contemplative. Lighting is muted, suggesting a lack of clarity. A prominent, stark text overlay appears on screen: 'Manual Data = Missed Opportunities & Wasted Hours.' The employee stares blankly at the complex, overwhelming data on their screen, the text overlay reinforcing the negative impact. | Slow insights mean delayed decisions. And a real hit to your competitive edge.",
+            "\"scene_5\"": "A smooth, steady crane shot lifts over the same employee, who is now visibly relaxed and calm. The environment has transitioned to a bright, modern open-plan office bathed in soft, inviting natural light streaming through large windows. The employee sips coffee, casually glancing at a single, clean, dynamic dashboard displayed on a large, wall-mounted screen. A faint smile of relief crosses their face. | Imagine this instead: One clear, intuitive dashboard. All your critical data, flowing automatically.",
+            "\"scene_6\"": "Within the same bright, modern office, a dynamic, energetic close-up tracking shot follows the employee as they smoothly navigate the intuitive dashboard interface on a sleek tablet. Seamless, real-time data visualizations update fluidly on the larger screen behind them. The lighting is even and highlights clarity. The employee effortlessly scrolls through charts and graphs, the data appearing instantly, clearly, with no unnecessary clicks or tabs. | Real-time insights, right at your fingertips. No manual effort. No more endless tabs. Just clarity.",
+            "\"scene_7\"": "A stable medium shot in a modern collaborative huddle space. Bright, focused lighting illuminates the screen and the employee. The employee confidently nods, makes a quick, decisive note on their tablet, and points to a key trend on the dashboard with a look of proactive understanding. A clean, impactful text overlay appears: 'Unlock Instant, Accurate Insights. Make Data-Driven Decisions in Minutes, Not Hours. Gain Your Competitive Edge.' | You see trends instantly. You make data-driven decisions in minutes, not hours. Shift your focus from data entry to strategic growth.",
+            "\"scene_8\"": "A wide, sweeping dolly shot in a sleek, modern conference room or collaborative workspace. The now confident employee stands at the head of a table, leading an impactful discussion with colleagues, gesturing emphatically to a large screen displaying simplified, actionable insights. Professional, bright, and empowering lighting. The employee maintains eye contact with colleagues, exuding confidence and leadership. The scene concludes with a clear call to action on screen. | Empower your teams. Outpace the competition. It's time to work smarter, not harder. Ready to transform your data insights? Click the link to discover how AI automation can unlock your business potential!"
+          }
+        }
+      }
+    ],
+    "render Id generator": [
+      {
+        "json": {
+          "success": true,
+          "message": "Created",
+          "response": {
+            "message": "Render Successfully Queued",
+            "id": "9816b866-49c9-4518-98e2-0752d8ba15f3"
+          }
+        }
+      }
+    ],
+    "video generator": [
+      {
+        "json": {
+          "success": true,
+          "message": "OK",
+          "response": {
+            "id": "9816b866-49c9-4518-98e2-0752d8ba15f3",
+            "owner": "gy9bzh6zwe",
+            "plan": "freeTrial",
+            "status": "done",
+            "error": "",
+            "duration": 64,
+            "billable": 64,
+            "renderTime": 5544.64,
+            "url": "https://shotstack-api-stage-output.s3-ap-southeast-2.amazonaws.com/gy9bzh6zwe/9816b866-49c9-4518-98e2-0752d8ba15f3.mp4",
+            "poster": null,
+            "thumbnail": null,
+            "data": {
+              "output": {
+                "format": "mp4",
+                "resolution": "preview"
+              },
+              "timeline": {
+                "tracks": [
+                  {
+                    "clips": [
+                      {
+                        "asset": {
+                          "type": "video",
+                          "src": "https://ik.imagekit.io/2uy7yxv4v/Attachments/1.mp4"
+                        },
+                        "start": 0,
+                        "length": 8
+                      },
+                      {
+                        "asset": {
+                          "type": "video",
+                          "src": "https://ik.imagekit.io/2uy7yxv4v/Attachments/2.mp4"
+                        },
+                        "start": 8,
+                        "length": 8
+                      },
+                      {
+                        "asset": {
+                          "type": "video",
+                          "src": "https://ik.imagekit.io/2uy7yxv4v/Attachments/3.mp4"
+                        },
+                        "start": 16,
+                        "length": 8
+                      },
+                      {
+                        "asset": {
+                          "type": "video",
+                          "src": "https://ik.imagekit.io/2uy7yxv4v/Attachments/4.mp4"
+                        },
+                        "start": 24,
+                        "length": 8
+                      },
+                      {
+                        "asset": {
+                          "type": "video",
+                          "src": "https://ik.imagekit.io/2uy7yxv4v/Attachments/5.mp4"
+                        },
+                        "start": 32,
+                        "length": 8
+                      },
+                      {
+                        "asset": {
+                          "type": "video",
+                          "src": "https://ik.imagekit.io/2uy7yxv4v/Attachments/6.mp4"
+                        },
+                        "start": 40,
+                        "length": 8
+                      },
+                      {
+                        "asset": {
+                          "type": "video",
+                          "src": "https://ik.imagekit.io/2uy7yxv4v/Attachments/7.mp4"
+                        },
+                        "start": 48,
+                        "length": 8
+                      },
+                      {
+                        "asset": {
+                          "type": "video",
+                          "src": "https://ik.imagekit.io/2uy7yxv4v/Attachments/8.mp4"
+                        },
+                        "start": 56,
+                        "length": 8
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "created": "2025-12-22T07:16:22.874Z",
+            "updated": "2025-12-22T07:16:31.381Z"
+          }
+        }
+      }
+    ],
+    "Information Extractor1": [
+      {
+        "json": {
+          "output": {
+            "title": "Stop Drowning in Data! Automate Your Reports & Get Instant Insights 📊",
+            "description": "Tired of endless hours spent manually compiling data? 😩 If your sales, marketing, or operations teams are struggling with disparate data sources, delayed insights, and human error, it's time for a change!\n\nThis short shows how data automation can transform your business. From overwhelmed to empowered, see how you can achieve instant, accurate, and consolidated insights. Drastically reduce reporting time, eliminate manual effort, and make rapid, data-driven strategic decisions.\n\nUnlock your competitive edge and shift your focus from data entry to strategic growth! #DataAutomation #BusinessEfficiency",
+            "hashtags": "#DataAutomation #BusinessIntelligence #DataAnalytics #DataReporting #DigitalTransformation #ProductivityTips #BusinessGrowth #SalesAutomation #MarketingAutomation #OperationsManagement #TimeSaving #EfficiencyBoost #AutomationSolutions #EnterpriseSoftware #DataDrivenDecisions"
+          }
+        }
+      }
+    ],
+    "AI Agent3": [
+      {
+        "json": {
+          "output": "```json\n{\n\"title\":\"Stop Drowning in Data! Automate Your Reports & Get Instant Insights 📊\",\n\"description\":\"Tired of endless hours spent manually compiling data? 😩 If your sales, marketing, or operations teams are struggling with disparate data sources, delayed insights, and human error, it's time for a change!\\n\\nThis short shows how data automation can transform your business. From overwhelmed to empowered, see how you can achieve instant, accurate, and consolidated insights. Drastically reduce reporting time, eliminate manual effort, and make rapid, data-driven strategic decisions.\\n\\nUnlock your competitive edge and shift your focus from data entry to strategic growth! #DataAutomation #BusinessEfficiency\",\n\"hashtags\":\"#DataAutomation #BusinessIntelligence #DataAnalytics #DataReporting #DigitalTransformation #ProductivityTips #BusinessGrowth #SalesAutomation #MarketingAutomation #OperationsManagement #TimeSaving #EfficiencyBoost #AutomationSolutions #EnterpriseSoftware #DataDrivenDecisions\"\n}\n```"
+        }
+      }
+    ]
+  },
+  "versionId": "e29bdf85-921c-45c9-89c9-3e3d91f5a3ad",
+  "versionCounter": 22,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-12-19T07:10:36.623Z",
+      "createdAt": "2025-12-19T07:10:36.623Z",
+      "role": "workflow:owner",
+      "workflowId": "4ijuB85w4AaYdQhl",
+      "projectId": "9ZLXGFMqYY5Qh0dZ",
+      "project": {
+        "updatedAt": "2025-04-30T06:24:01.804Z",
+        "createdAt": "2025-04-28T07:43:19.369Z",
+        "id": "9ZLXGFMqYY5Qh0dZ",
+        "name": "HR  Wangoes <hr@wangoes.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "projectRelations": [
+          {
+            "updatedAt": "2025-04-28T07:43:19.369Z",
+            "createdAt": "2025-04-28T07:43:19.369Z",
+            "userId": "e2104790-a2ce-47aa-bd6b-0032b4745bdc",
+            "projectId": "9ZLXGFMqYY5Qh0dZ",
+            "user": {
+              "updatedAt": "2025-12-26T05:02:02.265Z",
+              "createdAt": "2025-04-28T07:43:18.347Z",
+              "id": "e2104790-a2ce-47aa-bd6b-0032b4745bdc",
+              "email": "hr@wangoes.com",
+              "firstName": "HR ",
+              "lastName": "Wangoes",
+              "personalizationAnswers": {
+                "version": "v4",
+                "personalization_survey_submitted_at": "2025-04-30T06:24:42.857Z",
+                "personalization_survey_n8n_version": "1.89.2",
+                "automationGoalDevops": [
+                  "other"
+                ],
+                "companySize": "20-99",
+                "companyType": "saas",
+                "role": "it",
+                "reportedSource": "linkedin"
+              },
+              "settings": {
+                "userActivated": true,
+                "easyAIWorkflowOnboarded": true,
+                "firstSuccessfulWorkflowId": "7WLPoXeVuA2eoJxG",
+                "userActivatedAt": 1746162680417,
+                "npsSurvey": {
+                  "responded": true,
+                  "lastShownAt": 1763531583744
+                },
+                "dismissedCallouts": {
+                  "aiAgentStarterCallout": true
+                }
+              },
+              "disabled": false,
+              "mfaEnabled": false,
+              "lastActiveAt": "2025-12-26",
+              "isPending": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "tags": []
+}
