@@ -1,0 +1,809 @@
+{
+  "updatedAt": "2025-12-10T09:17:40.781Z",
+  "createdAt": "2025-12-04T06:26:47.818Z",
+  "name": "Veo3 video Generation",
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1320,
+        20
+      ],
+      "id": "eea1bb19-42f8-4904-9964-73416ed153a3",
+      "name": "Wait",
+      "webhookId": "bf1ff096-f4c8-48bd-9577-c090e3dd8c36"
+    },
+    {
+      "parameters": {
+        "formTitle": "Generate video",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "give short video description"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        400,
+        20
+      ],
+      "id": "a29daf94-87e4-4fe3-9161-c81ead2e776c",
+      "name": "On form submission",
+      "webhookId": "40e13a91-4e71-4076-937b-f29ad9d13f24"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        540,
+        240
+      ],
+      "id": "375be127-d4ae-44b8-83c0-59284f1e2898",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b5cce1ee-f609-499d-8820-85a672519288",
+              "name": "data.response.resultUrls",
+              "value": "={{ $json.data.response.resultUrls }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1760,
+        20
+      ],
+      "id": "e4e2c57d-108a-4f66-a1c9-976e879cbe7c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1XZ__-vLk5PjdAvB7B0VURcXnqFFJB3qa",
+          "mode": "list",
+          "cachedResultName": "story video ",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1XZ__-vLk5PjdAvB7B0VURcXnqFFJB3qa"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2180,
+        20
+      ],
+      "id": "5f7c05d9-dde1-48c6-bedd-13fa83d70f31",
+      "name": "Google Drive"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/veo/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 7ff1f4cd3ef75f558270feda7025c3bf"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $json.output }}"
+            },
+            {
+              "name": "model",
+              "value": "veo3_fast"
+            },
+            {
+              "name": "aspectRatio",
+              "value": "16:9"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1060,
+        20
+      ],
+      "id": "5953dbb1-e334-4ec6-8b0c-5a8088943938",
+      "name": "Generate task_id"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.kie.ai/api/v1/veo/record-info?taskId={{ $json.data.taskId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 7ff1f4cd3ef75f558270feda7025c3bf"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1520,
+        20
+      ],
+      "id": "f898c608-f316-4de3-9185-4cdd3a286286",
+      "name": "generates the video URL"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data.response.resultUrls }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1960,
+        20
+      ],
+      "id": "51f5465d-2ef9-4184-85f5-9e868a356b14",
+      "name": "Download video"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json[\"give short video description\"] }}",
+        "options": {
+          "systemMessage": "=You are an expert cinematic prompt engineer and storyteller who creates ultra-detailed, 4K video generation prompts for advanced models like Sora, Runway, or Pika Labs.\nYour mission:\nTransform a short user-provided idea into a stunning, high-definition cinematic video scene that includes a natural Hindi dialogue or quote spoken by a character.\n\nInstructions:\n\nUnderstand the Idea:\n\nThe user will give a short concept or idea (e.g., “A warrior standing on a cliff during sunset”).\n\nExpand this into a rich cinematic sequence.\n\nYour Output:\n\nGenerate one single, ready-to-use cinematic video prompt.\n\nThe prompt must be descriptive, emotionally powerful, and optimized for realism, storytelling, and visual composition.\n\nInclude one or two lines of Hindi dialogue or a short quote that fits the scene’s emotion.\n\nWrite the Hindi dialogue in Devanagari script (not transliteration).\n\nPrompt Composition Guidelines:\n\na. Scene Description:\n\nClearly describe the environment, time of day, lighting, weather, color tone, and camera angle.\n\nInclude camera movement (e.g., slow pan, drone shot, dolly zoom, close-up).\n\nb. Characters & Action:\n\nDescribe the main character(s) — appearance, clothing, emotion, and movement.\n\nShow what happens visually, not abstractly.\n\nc. Hindi Dialogue Integration:\n\nAdd one realistic spoken line or reflective quote in Hindi that suits the moment.\n\nIt can be emotional, motivational, poetic, or dramatic — but must feel natural to the scene.\n\nExample style:\n\n“वह धीरे से बोला, ‘कभी-कभी ख़ामोशी ही सबसे बड़ी चीख होती है।’”\n\n“उसने आसमान की ओर देखा और कहा, ‘सपने उन्हीं के पूरे होते हैं जो सोते नहीं।’”\n\nd. Cinematic & Technical Detailing:\n\nUse visual realism terms: 4K ultra HD, cinematic lighting, shallow depth of field, volumetric light, realistic motion blur, lens flare, dynamic camera movement, smooth transitions.\n\nYou can reference camera gear (e.g., shot on ARRI Alexa 65, 50mm lens, wide aperture f/1.4).\n\ne. Style & Tone:\n\nChoose the most fitting tone: dramatic, emotional, romantic, mysterious, epic, or spiritual.\n\nEnd the prompt with a subtle cinematic direction or atmosphere keyword (e.g., epic orchestral ambience, soft wind sounds, golden hour lighting).\n\nInput:{{ $json['give short video description'] }}\n\nFormatting:\n\nOutput only one final paragraph like this:\n\nExample Output:\nA cinematic drone shot captures a lone warrior standing on a rugged cliff at sunset, the wind rippling through his tattered cloak as golden light bathes the vast valley below. The camera slowly circles around him, highlighting the scars on his face and the fire in his eyes. He grips his sword, gazing into the fading sun, as soft dust swirls in the air. The atmosphere feels heavy with destiny and silence, until he murmurs, “कभी-कभी हार भी जीत जितनी ही बहादुर होती है।” 4K ultra-realistic, volumetric sunset lighting, shallow depth of field, smooth camera orbit, shot on ARRI Alexa 65 with 50mm lens, cinematic tone.\n\nFinal Output Rules:\n\nOutput only the final video prompt — no notes, no explanation.\n\nThe Hindi dialogue must feel emotionally integrated, not random.\n\nThe scene must feel film-like, ready for direct input into Sora."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        600,
+        20
+      ],
+      "id": "ecf813cc-5821-4663-a7a6-002ebddef658",
+      "name": "Prompt generation"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json[\"give short video description\"] }}",
+        "options": {
+          "systemMessage": "=You are an expert cinematic storyteller and prompt engineer specialized in writing high-quality, dialogue-driven prompts for AI video generation models like Sora, Veo, or Pika Labs.\nYour task is to transform a simple idea or theme provided by the user into a detailed, high-definition, emotionally rich video prompt — including natural English dialogue or a short quote spoken by one or more characters.\n\nINSTRUCTIONS:\n\nUnderstand the user input:\n\nThe input will be a short idea, concept, or theme (e.g., “a lone astronaut discovering life on Mars”).\n\nExpand this idea into a vivid cinematic moment — complete with visuals, emotions, and one line of dialogue.\n\nOutput Format:\n\nReturn only one final video prompt in natural language (no headings or explanations).\n\nUse the format shown below.\n\nSTRUCTURE YOUR PROMPT LIKE THIS:\n[Final Prompt]\n\nA cinematic 4K ultra-realistic shot of [describe setting, characters, and action in detail]. [Add visual style: lighting, camera motion, atmosphere, and tone]. The camera captures every texture and emotion with smooth motion, natural lighting, and depth of field. One character — [describe who speaks briefly: e.g., “a weary astronaut, his voice echoing through the comms”] — softly says in English: “<insert fitting dialogue or quote>”. \nShot on ARRI Alexa 65, cinematic color grading, natural movement, and atmospheric sound design.\n\nKEY ELEMENTS TO INCLUDE:\n\n1. Scene Composition\n\nSetting, time of day, environment, weather\n\nCamera type, motion, and perspective (e.g., drone shot, slow-motion tracking, handheld close-up)\n\n2. Visual Quality\n\nLighting and mood (golden hour, neon glow, moonlight, fog, dust motes)\n\nRealistic details (clothing, reflections, particles, textures)\n\nAlways specify 4K ultra-realistic cinematic look\n\n3. Character\n\nDescribe their emotional state, posture, expression, and what they’re doing\n\nGive a short English dialogue or quote that fits naturally in tone and story (1 sentence max)\n\n4. Tone and Emotion\n\nThe mood should match the scene — e.g., hopeful, melancholic, inspiring, mysterious\n\n5. Style\n\nAlways cinematic, detailed, and grounded in physical realism\n\nAvoid abstract terms (“beautiful,” “cool”) — describe what’s seen and heard\n\ninput:- {{ $json['give short video description'] }}\n\nEXAMPLE OUTPUTS:\nExample 1:\n\nA cinematic 4K ultra-realistic close-up of a weary astronaut standing on the red sands of Mars at sunset. The orange glow of the dying sun reflects on his cracked helmet as dust drifts slowly in the thin air. The camera pans gently around him, revealing strange alien plants sprouting nearby. Through his radio, his voice trembles as he whispers in English: “Maybe we were never alone after all.” Shot on ARRI Alexa 65, soft light, volumetric haze, and smooth motion blur.\n\nExample 2:\n\nA dramatic slow-motion tracking shot of a young woman running through a rain-soaked Tokyo alley at night. Neon lights shimmer across puddles as the camera follows her reflection on wet pavement. Her breathing is heavy, rain dripping from her hair. She pauses under a flickering sign and says softly in English: “You can’t escape who you really are.” 4K cinematic realism, handheld camera, depth of field, moody cyberpunk lighting.\n\nFINAL OUTPUT RULES:\n\nOutput only the final cinematic video prompt, no bullet points or explanations.\n\nThe dialogue must be in English and naturally fit the tone of the scene.\n\nKeep the dialogue short and emotionally expressive (5–12 words).\n\nAssume this will be used directly by a video generation model (Sora)."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        620,
+        500
+      ],
+      "id": "c4bc04e8-2f1a-4e60-ad2e-24e65b567c91",
+      "name": "Prompt generation1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        520,
+        720
+      ],
+      "id": "67fbccfa-8533-4aa6-8751-7b5145976599",
+      "name": "Google Gemini Chat Model1"
+    },
+    {
+      "parameters": {
+        "formTitle": "Generate video",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "give short video description"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        380,
+        500
+      ],
+      "id": "f47e9242-0892-42b9-9697-22852f929959",
+      "name": "On form submission1",
+      "webhookId": "eb391043-5d6f-4db8-b67c-ea9dbd1ecaff"
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1300,
+        500
+      ],
+      "id": "55dc7dd7-889e-44a5-ad69-22193da3d5e7",
+      "name": "Wait1",
+      "webhookId": "bf1ff096-f4c8-48bd-9577-c090e3dd8c36"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b5cce1ee-f609-499d-8820-85a672519288",
+              "name": "data.response.resultUrls",
+              "value": "={{ $json.data.response.resultUrls }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1740,
+        500
+      ],
+      "id": "24e20425-e8e9-4184-a52b-53e5c6efb865",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1XZ__-vLk5PjdAvB7B0VURcXnqFFJB3qa",
+          "mode": "list",
+          "cachedResultName": "story video ",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1XZ__-vLk5PjdAvB7B0VURcXnqFFJB3qa"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2160,
+        500
+      ],
+      "id": "f5067acb-9872-4dc8-ba7e-b2cc8d17ac18",
+      "name": "Google Drive1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/veo/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 7ff1f4cd3ef75f558270feda7025c3bf"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $json.output }}"
+            },
+            {
+              "name": "model",
+              "value": "veo3_fast"
+            },
+            {
+              "name": "aspectRatio",
+              "value": "16:9"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1040,
+        500
+      ],
+      "id": "982afdb8-e481-4a8a-833d-7c6f160f390a",
+      "name": "Generate task_id1"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.kie.ai/api/v1/veo/record-info?taskId={{ $json.data.taskId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 7ff1f4cd3ef75f558270feda7025c3bf"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1500,
+        500
+      ],
+      "id": "b38e30ab-7201-410e-8fdb-a763d4c11a07",
+      "name": "generates the video URL1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data.response.resultUrls }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1940,
+        500
+      ],
+      "id": "aad86a5f-6cbd-4104-8e19-99c3ab755381",
+      "name": "Download video1"
+    },
+    {
+      "parameters": {
+        "content": "FOR HINDI ",
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2460,
+        -20
+      ],
+      "typeVersion": 1,
+      "id": "7267fd5d-fd7e-47ba-beb0-f96258255943",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "FOR ENGLISH"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2440,
+        460
+      ],
+      "typeVersion": 1,
+      "id": "c9eb8de4-066a-4fef-b42a-da52f42327f5",
+      "name": "Sticky Note1"
+    }
+  ],
+  "connections": {
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "generates the video URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Prompt generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Prompt generation",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Download video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate task_id": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "generates the video URL": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download video": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt generation": {
+      "main": [
+        [
+          {
+            "node": "Generate task_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Prompt generation1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission1": {
+      "main": [
+        [
+          {
+            "node": "Prompt generation1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "generates the video URL1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Download video1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate task_id1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "generates the video URL1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download video1": {
+      "main": [
+        [
+          {
+            "node": "Google Drive1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt generation1": {
+      "main": [
+        [
+          {
+            "node": "Generate task_id1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "pinData": {
+    "Edit Fields": [
+      {
+        "json": {
+          "data": {
+            "response": {
+              "resultUrls": [
+                "https://tempfile.aiquickdraw.com/v/fb19204337cc10617202e34e87650594_1764843198.mp4"
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "On form submission": [
+      {
+        "json": {
+          "give short video description": "a war scene where the general is motivating the soldier",
+          "submittedAt": "2025-12-04T04:55:51.505-05:00",
+          "formMode": "test"
+        }
+      }
+    ],
+    "Generate task_id": [
+      {
+        "json": {
+          "code": 200,
+          "msg": "success",
+          "data": {
+            "taskId": "fb19204337cc10617202e34e87650594"
+          }
+        }
+      }
+    ],
+    "generates the video URL": [
+      {
+        "json": {
+          "code": 200,
+          "msg": "success",
+          "data": {
+            "taskId": "fb19204337cc10617202e34e87650594",
+            "paramJson": "{\"aspectRatio\":\"16:9\",\"enableFallback\":false,\"enableTranslation\":true,\"model\":\"veo3_fast\",\"prompt\":\"A sweeping drone shot reveals a vast, war-torn battlefield at the icy dawn, shrouded in thick, volumetric mist. Mud-soaked trenches and scattered debris litter the desolate landscape, as hundreds of weary, grimy soldiers huddle together, their breath pluming in the frigid air. The camera slowly descends and dollies in, focusing on General Raghunath, a battle-hardened figure in worn, ornate armor, standing atop a makeshift mound. Golden hour light begins to pierce through the heavy fog, backlighting him in a defiant silhouette, casting long shadows. His face, a roadmap of past conflicts, shows a flicker of profound weariness that quickly transforms into steely, unwavering resolve as he addresses his huddled troops. A subtle lens flare catches the edge of his helmet. As he speaks, the camera gracefully pans across the faces of his soldiers, revealing a canvas of fear, exhaustion, and then, a slow, rekindled spark of hope and determination igniting in their eyes. His voice, hoarse yet powerful, cuts through the stillness as he declares, \\\"हार सिर्फ मन की उपज है। उठो, मेरे वीरों, आज हमें अपना भाग्य स्वयं लिखना है!\\\" 4K ultra HD, hyper-realistic, shallow depth of field, cinematic lighting, dramatic volumetric fog, realistic motion blur, slow crane shot transitioning to a sweeping pan, shot on ARRI Alexa 65 with a 75mm anamorphic lens, epic and inspiring tone, a low, rumbling orchestral score beginning to swell.\"}",
+            "response": {
+              "taskId": "fb19204337cc10617202e34e87650594",
+              "resolution": "720p",
+              "originUrls": null,
+              "resultUrls": [
+                "https://tempfile.aiquickdraw.com/v/fb19204337cc10617202e34e87650594_1764843198.mp4"
+              ],
+              "hasAudioList": [
+                true
+              ],
+              "seeds": [
+                75587
+              ]
+            },
+            "successFlag": 1,
+            "fallbackFlag": false,
+            "completeTime": 1764843199000,
+            "createTime": 1764843100000,
+            "errorCode": null,
+            "errorMessage": null
+          }
+        }
+      }
+    ],
+    "Prompt generation": [
+      {
+        "json": {
+          "output": "A sweeping drone shot reveals a vast, war-torn battlefield at the icy dawn, shrouded in thick, volumetric mist. Mud-soaked trenches and scattered debris litter the desolate landscape, as hundreds of weary, grimy soldiers huddle together, their breath pluming in the frigid air. The camera slowly descends and dollies in, focusing on General Raghunath, a battle-hardened figure in worn, ornate armor, standing atop a makeshift mound. Golden hour light begins to pierce through the heavy fog, backlighting him in a defiant silhouette, casting long shadows. His face, a roadmap of past conflicts, shows a flicker of profound weariness that quickly transforms into steely, unwavering resolve as he addresses his huddled troops. A subtle lens flare catches the edge of his helmet. As he speaks, the camera gracefully pans across the faces of his soldiers, revealing a canvas of fear, exhaustion, and then, a slow, rekindled spark of hope and determination igniting in their eyes. His voice, hoarse yet powerful, cuts through the stillness as he declares, \"हार सिर्फ मन की उपज है। उठो, मेरे वीरों, आज हमें अपना भाग्य स्वयं लिखना है!\" 4K ultra HD, hyper-realistic, shallow depth of field, cinematic lighting, dramatic volumetric fog, realistic motion blur, slow crane shot transitioning to a sweeping pan, shot on ARRI Alexa 65 with a 75mm anamorphic lens, epic and inspiring tone, a low, rumbling orchestral score beginning to swell."
+        }
+      }
+    ],
+    "Edit Fields1": [
+      {
+        "json": {
+          "data": {
+            "response": {
+              "resultUrls": [
+                "https://tempfile.aiquickdraw.com/v/fb19204337cc10617202e34e87650594_1764843198.mp4"
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "Generate task_id1": [
+      {
+        "json": {
+          "code": 200,
+          "msg": "success",
+          "data": {
+            "taskId": "fb19204337cc10617202e34e87650594"
+          }
+        }
+      }
+    ],
+    "generates the video URL1": [
+      {
+        "json": {
+          "code": 200,
+          "msg": "success",
+          "data": {
+            "taskId": "fb19204337cc10617202e34e87650594",
+            "paramJson": "{\"aspectRatio\":\"16:9\",\"enableFallback\":false,\"enableTranslation\":true,\"model\":\"veo3_fast\",\"prompt\":\"A sweeping drone shot reveals a vast, war-torn battlefield at the icy dawn, shrouded in thick, volumetric mist. Mud-soaked trenches and scattered debris litter the desolate landscape, as hundreds of weary, grimy soldiers huddle together, their breath pluming in the frigid air. The camera slowly descends and dollies in, focusing on General Raghunath, a battle-hardened figure in worn, ornate armor, standing atop a makeshift mound. Golden hour light begins to pierce through the heavy fog, backlighting him in a defiant silhouette, casting long shadows. His face, a roadmap of past conflicts, shows a flicker of profound weariness that quickly transforms into steely, unwavering resolve as he addresses his huddled troops. A subtle lens flare catches the edge of his helmet. As he speaks, the camera gracefully pans across the faces of his soldiers, revealing a canvas of fear, exhaustion, and then, a slow, rekindled spark of hope and determination igniting in their eyes. His voice, hoarse yet powerful, cuts through the stillness as he declares, \\\"हार सिर्फ मन की उपज है। उठो, मेरे वीरों, आज हमें अपना भाग्य स्वयं लिखना है!\\\" 4K ultra HD, hyper-realistic, shallow depth of field, cinematic lighting, dramatic volumetric fog, realistic motion blur, slow crane shot transitioning to a sweeping pan, shot on ARRI Alexa 65 with a 75mm anamorphic lens, epic and inspiring tone, a low, rumbling orchestral score beginning to swell.\"}",
+            "response": {
+              "taskId": "fb19204337cc10617202e34e87650594",
+              "resolution": "720p",
+              "originUrls": null,
+              "resultUrls": [
+                "https://tempfile.aiquickdraw.com/v/fb19204337cc10617202e34e87650594_1764843198.mp4"
+              ],
+              "hasAudioList": [
+                true
+              ],
+              "seeds": [
+                75587
+              ]
+            },
+            "successFlag": 1,
+            "fallbackFlag": false,
+            "completeTime": 1764843199000,
+            "createTime": 1764843100000,
+            "errorCode": null,
+            "errorMessage": null
+          }
+        }
+      }
+    ]
+  },
+  "versionCounter": 1,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-12-04T06:26:47.818Z",
+      "createdAt": "2025-12-04T06:26:47.818Z",
+      "role": "workflow:owner",
+      "workflowId": "b2b9DBPnBZHSkVTI",
+      "projectId": "9ZLXGFMqYY5Qh0dZ",
+      "project": {
+        "updatedAt": "2025-04-30T06:24:01.804Z",
+        "createdAt": "2025-04-28T07:43:19.369Z",
+        "id": "9ZLXGFMqYY5Qh0dZ",
+        "name": "HR  Wangoes <hr@wangoes.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "projectRelations": [
+          {
+            "updatedAt": "2025-04-28T07:43:19.369Z",
+            "createdAt": "2025-04-28T07:43:19.369Z",
+            "userId": "e2104790-a2ce-47aa-bd6b-0032b4745bdc",
+            "projectId": "9ZLXGFMqYY5Qh0dZ",
+            "user": {
+              "updatedAt": "2025-12-29T07:23:36.222Z",
+              "createdAt": "2025-04-28T07:43:18.347Z",
+              "id": "e2104790-a2ce-47aa-bd6b-0032b4745bdc",
+              "email": "hr@wangoes.com",
+              "firstName": "HR ",
+              "lastName": "Wangoes",
+              "personalizationAnswers": {
+                "version": "v4",
+                "personalization_survey_submitted_at": "2025-04-30T06:24:42.857Z",
+                "personalization_survey_n8n_version": "1.89.2",
+                "automationGoalDevops": [
+                  "other"
+                ],
+                "companySize": "20-99",
+                "companyType": "saas",
+                "role": "it",
+                "reportedSource": "linkedin"
+              },
+              "settings": {
+                "userActivated": true,
+                "easyAIWorkflowOnboarded": true,
+                "firstSuccessfulWorkflowId": "7WLPoXeVuA2eoJxG",
+                "userActivatedAt": 1746162680417,
+                "npsSurvey": {
+                  "responded": true,
+                  "lastShownAt": 1763531583744
+                },
+                "dismissedCallouts": {
+                  "aiAgentStarterCallout": true
+                }
+              },
+              "disabled": false,
+              "mfaEnabled": false,
+              "lastActiveAt": "2025-12-28",
+              "isPending": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "tags": []
+}
