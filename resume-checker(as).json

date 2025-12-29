@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2025-11-24T06:58:59.277Z",
+  "updatedAt": "2025-12-29T11:41:39.682Z",
   "createdAt": "2025-10-06T11:42:20.652Z",
   "name": "resume checker(AS)",
   "isArchived": false,
@@ -34,8 +34,8 @@
       "type": "n8n-nodes-base.formTrigger",
       "typeVersion": 2.2,
       "position": [
-        -220,
-        -300
+        -224,
+        -304
       ],
       "id": "9a541766-5a75-44a0-8902-877a9aa92fca",
       "name": "On form submission",
@@ -62,7 +62,7 @@
       "typeVersion": 3,
       "position": [
         0,
-        -300
+        -304
       ],
       "id": "680ac019-9e52-411c-b239-ac7101a00b61",
       "name": "Google Drive"
@@ -80,8 +80,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        220,
-        -300
+        224,
+        -304
       ],
       "id": "48214efb-ed8a-4ea9-9dfe-55e8c03f7a1f",
       "name": "Google Drive1"
@@ -94,8 +94,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        440,
-        -300
+        448,
+        -304
       ],
       "id": "f32ec741-7754-4481-bd9b-514416ab2062",
       "name": "Extract from File"
@@ -108,8 +108,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        860,
-        -200
+        864,
+        -208
       ],
       "id": "dd063e4f-a9f3-4001-affb-fdd3e8620be3",
       "name": "Extract from File1"
@@ -120,14 +120,14 @@
         "text": "=candidates resume -  {{ $('Extract from File').item.json.text }}\n\njob description and requirements - {{ $json.text }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "=\n# Overview\nYou are an expert technical recruiter specializing in AI, automation, and software roles. You have been given a job description and a candidate resume. Your task is to analyze the resume in relation to the job description and provide a detailed screening report.\nFocus specifically on how well the candidate matches the core requirements and ideal profile outlined in the job description. Evaluate both technical skill alignment and business-context understanding. Use reasoning grounded in the actual content of the resume and job post avoid making assumptions.\n## Output\nYour output should follow this exact format:\n**Candidate Strengths:**\nList the top strengths or relevant qualifications the candidate brings to the table. Be specific.\n**Candidate Weaknesses:**\nList areas where the candidate is lacking or mismatched based on the job description.\n**Risk Factor:**\n* Assign a risk score (Low / Medium / High)\nExplain the worst-case scenario if this candidate is hired.\n**Reward Factor:**\nAssign a reward score (Low / Medium / High)\nDescribe the best-case scenario - what value could this candidate unlock?\n+ Does the candidate appear to be a short-term or long-term fit?\n**Overall Fit Rating (0-10):**\nAssign a number between @ (terrible match) and 10 (perfect match). Do not give decimals.\n**Justification for Rating:**\nExplain clearly why this candidate received that score. Reference specific resume content and how it aligns or doesn't with the job description.\n\nat last provide the score of the canidate out of 100\njob description : {{ $json.text }}"
+          "systemMessage": "=\n# Overview\nYou are an expert technical recruiter specializing in AI, automation, and software roles. You have been given a job description and a candidate resume. Your task is to analyze the resume in relation to the job description and provide a detailed screening report.\nFocus specifically on how well the candidate matches the core requirements and ideal profile outlined in the job description. Evaluate both technical skill alignment and business-context understanding. Use reasoning grounded in the actual content of the resume and job post avoid making assumptions.\n## Output\nYour output should follow this exact format:\n**Candidate Strengths:**\nList the top strengths or relevant qualifications the candidate brings to the table. Be specific.\n**Candidate Weaknesses:**\nList areas where the candidate is lacking or mismatched based on the job description.\n**Risk Factor:**\n* Assign a risk score (Low / Medium / High)\nExplain the worst-case scenario if this candidate is hired.\n**Reward Factor:**\nAssign a reward score (Low / Medium / High)\nDescribe the best-case scenario - what value could this candidate unlock?\n+ Does the candidate appear to be a short-term or long-term fit?\n**Overall Fit Rating (0-10):**\nAssign a number between @ (terrible match) and 10 (perfect match). Do not give decimals.\n**Justification for Rating:**\nExplain clearly why this candidate received that score. Reference specific resume content and how it aligns or doesn't with the job description.\n\n"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.9,
       "position": [
-        1100,
-        -420
+        1104,
+        -416
       ],
       "id": "eb93f8a3-f8a8-4fc5-9816-97132e3ce932",
       "name": "AI Agent"
@@ -140,8 +140,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -280,
-        -520
+        -288,
+        -528
       ],
       "typeVersion": 1,
       "id": "bf4229f1-7858-461b-bbef-b9342f918674",
@@ -156,8 +156,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        600,
-        -520
+        608,
+        -528
       ],
       "typeVersion": 1,
       "id": "a0437f17-d8b8-4dfd-8ddd-da2f02de5b9f",
@@ -173,7 +173,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         0,
-        -520
+        -528
       ],
       "typeVersion": 1,
       "id": "5cf0630b-2a87-475a-9e23-80e7bca932db",
@@ -188,7 +188,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        600,
+        608,
         -240
       ],
       "id": "d01eb1d4-788f-452f-bc81-c7fb1a1dbef9",
@@ -209,8 +209,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        660,
-        -200
+        672,
+        -208
       ],
       "id": "cb4c5b1e-e2db-41d6-b708-66b442ec0cf5",
       "name": "Google Drive2"
@@ -224,8 +224,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1060,
-        -520
+        1072,
+        -528
       ],
       "typeVersion": 1,
       "id": "a9fde6d3-dce6-4812-96ae-a1b6d59f031d",
@@ -243,8 +243,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1100,
-        -200
+        1104,
+        -208
       ],
       "id": "2dbd9422-ca52-4ea8-ab2e-28b8ef4154e2",
       "name": "OpenAI Chat Model"
@@ -259,8 +259,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1460,
-        -300
+        1472,
+        -304
       ],
       "id": "42931354-8472-4b49-af40-2db3dedce16b",
       "name": "Gmail",
@@ -274,8 +274,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1400,
-        -520
+        1408,
+        -528
       ],
       "typeVersion": 1,
       "id": "ddbcd85a-8deb-466d-9b5b-e65542569846",
@@ -362,8 +362,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        660,
-        -440
+        672,
+        -448
       ],
       "id": "b0664ab3-ee21-4904-97e4-582ac7662669",
       "name": "Google Sheets"
@@ -375,8 +375,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.2,
       "position": [
-        1260,
-        -200
+        1264,
+        -208
       ],
       "id": "a81a5ebe-ac79-45e5-8763-960b6342e38a",
       "name": "Structured Output Parser"
@@ -503,7 +503,7 @@
   },
   "staticData": null,
   "pinData": {},
-  "versionCounter": 1,
+  "versionCounter": 2,
   "triggerCount": 0,
   "shared": [
     {
