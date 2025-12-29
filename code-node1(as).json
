@@ -1,0 +1,173 @@
+{
+  "updatedAt": "2025-11-24T06:56:32.882Z",
+  "createdAt": "2025-10-01T11:54:31.178Z",
+  "name": "code node1(AS)",
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -2460,
+        -500
+      ],
+      "id": "20ac4764-a600-4a46-b94d-e0bed14a056d",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1CsJ_4yug2A23nIJkljWQWqDW75JdE9pfAWgYZGdGmI8",
+          "mode": "list",
+          "cachedResultName": "companies",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CsJ_4yug2A23nIJkljWQWqDW75JdE9pfAWgYZGdGmI8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CsJ_4yug2A23nIJkljWQWqDW75JdE9pfAWgYZGdGmI8/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -2240,
+        -500
+      ],
+      "id": "45744dc7-6e3d-4180-bc7d-8bc52ca26f17",
+      "name": "Google Sheets"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nlet sum = 0;\n\nfor (const item of items) {\n  const value = item.json[\"total_value\"] || item.json[\"total_value \"] || 0;\n  sum += Number(value);\n}\nreturn [\n  {\n    json: {\n      total_sum: sum\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2020,
+        -500
+      ],
+      "id": "f535b586-5568-47a9-ac1b-9859f12b0080",
+      "name": "Code",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Add a new field called 'myNewField' to the JSON of the item\n$input.item.json.myNewField = 1;\n\nvar averagevalue = \n$input.item.json.total_value /$input.item.json.order_count \n\n$input.item.json.averagevalue = averagevalue\n\nreturn $input.item;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1920,
+        -700
+      ],
+      "id": "f03174af-d1fd-43f0-adb4-5d4f949f6eea",
+      "name": "Code1"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "pinData": {},
+  "versionCounter": 1,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-10-01T11:54:31.178Z",
+      "createdAt": "2025-10-01T11:54:31.178Z",
+      "role": "workflow:owner",
+      "workflowId": "FSqRocByOkwogNXY",
+      "projectId": "9ZLXGFMqYY5Qh0dZ",
+      "project": {
+        "updatedAt": "2025-04-30T06:24:01.804Z",
+        "createdAt": "2025-04-28T07:43:19.369Z",
+        "id": "9ZLXGFMqYY5Qh0dZ",
+        "name": "HR  Wangoes <hr@wangoes.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "projectRelations": [
+          {
+            "updatedAt": "2025-04-28T07:43:19.369Z",
+            "createdAt": "2025-04-28T07:43:19.369Z",
+            "userId": "e2104790-a2ce-47aa-bd6b-0032b4745bdc",
+            "projectId": "9ZLXGFMqYY5Qh0dZ",
+            "user": {
+              "updatedAt": "2025-12-29T07:23:36.222Z",
+              "createdAt": "2025-04-28T07:43:18.347Z",
+              "id": "e2104790-a2ce-47aa-bd6b-0032b4745bdc",
+              "email": "hr@wangoes.com",
+              "firstName": "HR ",
+              "lastName": "Wangoes",
+              "personalizationAnswers": {
+                "version": "v4",
+                "personalization_survey_submitted_at": "2025-04-30T06:24:42.857Z",
+                "personalization_survey_n8n_version": "1.89.2",
+                "automationGoalDevops": [
+                  "other"
+                ],
+                "companySize": "20-99",
+                "companyType": "saas",
+                "role": "it",
+                "reportedSource": "linkedin"
+              },
+              "settings": {
+                "userActivated": true,
+                "easyAIWorkflowOnboarded": true,
+                "firstSuccessfulWorkflowId": "7WLPoXeVuA2eoJxG",
+                "userActivatedAt": 1746162680417,
+                "npsSurvey": {
+                  "responded": true,
+                  "lastShownAt": 1763531583744
+                },
+                "dismissedCallouts": {
+                  "aiAgentStarterCallout": true
+                }
+              },
+              "disabled": false,
+              "mfaEnabled": false,
+              "lastActiveAt": "2025-12-28",
+              "isPending": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "tags": []
+}
