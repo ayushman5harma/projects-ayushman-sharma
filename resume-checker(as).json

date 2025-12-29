@@ -1,0 +1,572 @@
+{
+  "updatedAt": "2025-11-24T06:58:59.277Z",
+  "createdAt": "2025-10-06T11:42:20.652Z",
+  "name": "resume checker(AS)",
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Job application Form ",
+        "formDescription": "role : software engineer",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Full Name"
+            },
+            {
+              "fieldLabel": "e-mail",
+              "fieldType": "email"
+            },
+            {
+              "fieldLabel": "Phone Number",
+              "fieldType": "number"
+            },
+            {
+              "fieldLabel": "Resume",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "acceptFileTypes": ".pdf"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -220,
+        -300
+      ],
+      "id": "9a541766-5a75-44a0-8902-877a9aa92fca",
+      "name": "On form submission",
+      "webhookId": "1d8844db-29e4-4b7f-a00b-1765137ddec9"
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "Resume",
+        "name": "={{ $('On form submission').item.json['Full Name'] }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        0,
+        -300
+      ],
+      "id": "680ac019-9e52-411c-b239-ac7101a00b61",
+      "name": "Google Drive"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        220,
+        -300
+      ],
+      "id": "48214efb-ed8a-4ea9-9dfe-55e8c03f7a1f",
+      "name": "Google Drive1"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        440,
+        -300
+      ],
+      "id": "f32ec741-7754-4481-bd9b-514416ab2062",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        860,
+        -200
+      ],
+      "id": "dd063e4f-a9f3-4001-affb-fdd3e8620be3",
+      "name": "Extract from File1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=candidates resume -  {{ $('Extract from File').item.json.text }}\n\njob description and requirements - {{ $json.text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=\n# Overview\nYou are an expert technical recruiter specializing in AI, automation, and software roles. You have been given a job description and a candidate resume. Your task is to analyze the resume in relation to the job description and provide a detailed screening report.\nFocus specifically on how well the candidate matches the core requirements and ideal profile outlined in the job description. Evaluate both technical skill alignment and business-context understanding. Use reasoning grounded in the actual content of the resume and job post avoid making assumptions.\n## Output\nYour output should follow this exact format:\n**Candidate Strengths:**\nList the top strengths or relevant qualifications the candidate brings to the table. Be specific.\n**Candidate Weaknesses:**\nList areas where the candidate is lacking or mismatched based on the job description.\n**Risk Factor:**\n* Assign a risk score (Low / Medium / High)\nExplain the worst-case scenario if this candidate is hired.\n**Reward Factor:**\nAssign a reward score (Low / Medium / High)\nDescribe the best-case scenario - what value could this candidate unlock?\n+ Does the candidate appear to be a short-term or long-term fit?\n**Overall Fit Rating (0-10):**\nAssign a number between @ (terrible match) and 10 (perfect match). Do not give decimals.\n**Justification for Rating:**\nExplain clearly why this candidate received that score. Reference specific resume content and how it aligns or doesn't with the job description.\n\nat last provide the score of the canidate out of 100\njob description : {{ $json.text }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        1100,
+        -420
+      ],
+      "id": "eb93f8a3-f8a8-4fc5-9816-97132e3ce932",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "content": "resume uploaded by the candidate ",
+        "height": 520,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -280,
+        -520
+      ],
+      "typeVersion": 1,
+      "id": "bf4229f1-7858-461b-bbef-b9342f918674",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "candidates details saved in a google sheet",
+        "height": 240,
+        "width": 440,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        600,
+        -520
+      ],
+      "typeVersion": 1,
+      "id": "a0437f17-d8b8-4dfd-8ddd-da2f02de5b9f",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "uploading and extracting candidates detail",
+        "height": 520,
+        "width": 560,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        -520
+      ],
+      "typeVersion": 1,
+      "id": "5cf0630b-2a87-475a-9e23-80e7bca932db",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "extracting job description",
+        "height": 240,
+        "width": 440
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        600,
+        -240
+      ],
+      "id": "d01eb1d4-788f-452f-bc81-c7fb1a1dbef9",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1W713LT-OYA497tt9NRZ7btkmFGfadR-z",
+          "mode": "list",
+          "cachedResultName": "job description.pdf",
+          "cachedResultUrl": "https://drive.google.com/file/d/1W713LT-OYA497tt9NRZ7btkmFGfadR-z/view?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        660,
+        -200
+      ],
+      "id": "cb4c5b1e-e2db-41d6-b708-66b442ec0cf5",
+      "name": "Google Drive2"
+    },
+    {
+      "parameters": {
+        "content": "AI processing and output generation",
+        "height": 520,
+        "width": 320,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1060,
+        -520
+      ],
+      "typeVersion": 1,
+      "id": "a9fde6d3-dce6-4812-96ae-a1b6d59f031d",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1100,
+        -200
+      ],
+      "id": "2dbd9422-ca52-4ea8-ab2e-28b8ef4154e2",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Google Drive1').item.json.owners[0].emailAddress }},{{ $('On form submission').item.json['e-mail'] }}",
+        "subject": "RESUME CHECKER'S OUTPUT ",
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1460,
+        -300
+      ],
+      "id": "42931354-8472-4b49-af40-2db3dedce16b",
+      "name": "Gmail",
+      "webhookId": "68455e88-69c0-4c5e-9d64-d3ba54ede4ca"
+    },
+    {
+      "parameters": {
+        "content": "Automation Completed \n--> mail sent to both candidate and employer ",
+        "height": 520,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1400,
+        -520
+      ],
+      "typeVersion": 1,
+      "id": "ddbcd85a-8deb-466d-9b5b-e65542569846",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ASsXii3Pr4Di0FMlZbpctcO20mwPjKWLVlD3QlS3MUQ",
+          "mode": "list",
+          "cachedResultName": "candidates info",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ASsXii3Pr4Di0FMlZbpctcO20mwPjKWLVlD3QlS3MUQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ASsXii3Pr4Di0FMlZbpctcO20mwPjKWLVlD3QlS3MUQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "numpages",
+              "displayName": "numpages",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "numrender",
+              "displayName": "numrender",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "info",
+              "displayName": "info",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "version",
+              "displayName": "version",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        660,
+        -440
+      ],
+      "id": "b0664ab3-ee21-4904-97e4-582ac7662669",
+      "name": "Google Sheets"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": ""
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1260,
+        -200
+      ],
+      "id": "a81a5ebe-ac79-45e5-8763-960b6342e38a",
+      "name": "Structured Output Parser"
+    }
+  ],
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive1": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Google Drive1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Google Drive2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive2": {
+      "main": [
+        [
+          {
+            "node": "Extract from File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "main": [
+        []
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        []
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "pinData": {},
+  "versionCounter": 1,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2025-10-06T11:42:20.652Z",
+      "createdAt": "2025-10-06T11:42:20.652Z",
+      "role": "workflow:owner",
+      "workflowId": "7sjkwXy4k1RFsaPk",
+      "projectId": "9ZLXGFMqYY5Qh0dZ",
+      "project": {
+        "updatedAt": "2025-04-30T06:24:01.804Z",
+        "createdAt": "2025-04-28T07:43:19.369Z",
+        "id": "9ZLXGFMqYY5Qh0dZ",
+        "name": "HR  Wangoes <hr@wangoes.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "projectRelations": [
+          {
+            "updatedAt": "2025-04-28T07:43:19.369Z",
+            "createdAt": "2025-04-28T07:43:19.369Z",
+            "userId": "e2104790-a2ce-47aa-bd6b-0032b4745bdc",
+            "projectId": "9ZLXGFMqYY5Qh0dZ",
+            "user": {
+              "updatedAt": "2025-12-29T07:23:36.222Z",
+              "createdAt": "2025-04-28T07:43:18.347Z",
+              "id": "e2104790-a2ce-47aa-bd6b-0032b4745bdc",
+              "email": "hr@wangoes.com",
+              "firstName": "HR ",
+              "lastName": "Wangoes",
+              "personalizationAnswers": {
+                "version": "v4",
+                "personalization_survey_submitted_at": "2025-04-30T06:24:42.857Z",
+                "personalization_survey_n8n_version": "1.89.2",
+                "automationGoalDevops": [
+                  "other"
+                ],
+                "companySize": "20-99",
+                "companyType": "saas",
+                "role": "it",
+                "reportedSource": "linkedin"
+              },
+              "settings": {
+                "userActivated": true,
+                "easyAIWorkflowOnboarded": true,
+                "firstSuccessfulWorkflowId": "7WLPoXeVuA2eoJxG",
+                "userActivatedAt": 1746162680417,
+                "npsSurvey": {
+                  "responded": true,
+                  "lastShownAt": 1763531583744
+                },
+                "dismissedCallouts": {
+                  "aiAgentStarterCallout": true
+                }
+              },
+              "disabled": false,
+              "mfaEnabled": false,
+              "lastActiveAt": "2025-12-28",
+              "isPending": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "tags": []
+}
